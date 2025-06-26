@@ -1,0 +1,5 @@
+Title: PrimUV Visualizer
+Description: A visualizer for the primuv function in VEX.
+Houdini Version: 20.5
+Main Nodes Used: Attribute Wrangle, Merge
+Category: VEX
