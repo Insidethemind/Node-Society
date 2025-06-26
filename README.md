@@ -10,5 +10,5 @@ By contributing and learning together, we aim to lower the barrier to entry and 
 
 All contributions to this repository are covered under the [Community Houdini File License](./License.txt) by default.
 
-Contributors may override this license by including a clearly labeled `LICENSE` file or license text within their submission. In such cases, that file’s terms will apply to that specific content only.
+Contributors may override this license by including a clearly labeled `LICENSE` file within their submission. In such cases, that file’s terms will apply to that specific content only.
 
