@@ -5,6 +5,13 @@ Our goal is to bring artists together to share knowledge, tips, and resources th
 
 By contributing and learning together, we aim to lower the barrier to entry and create a space where everyone can thrive. We truly believe that everyone deserves the opportunity to bring their imaginations to life and in doing so it will push everyone to improve further.
 
+## Usage
+
+The files shared within this community are intended solely for educational purposes. If you're contributing, please keep in mind that the goal is to support others in learning and developing their Houdini skills.
+
+This community is not a platform for self-promotion, portfolio exposure, or driving traffic to external sales funnels. Contributions should be made with the intent to educate, inspire, and elevate others.
+
+Please share resources that reflect the spirit of collaboration and growth.
 
 ## License
 
