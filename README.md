@@ -1,5 +1,5 @@
 # Node-Society
-Welcome to [Node-Society], a collaborative Houdini community dedicated to making the learning journey smoother for new and aspiring users.
+Welcome to Node Society, a collaborative Houdini community dedicated to making the learning journey smoother for new and aspiring users.
 
 Our goal is to bring artists together to share knowledge, tips, and resources that help demystify Houdini’s powerful but complex toolset. Whether you’re just getting started or looking to deepen your understanding, this space is built to support your growth through community-contributed files and examples.
 
