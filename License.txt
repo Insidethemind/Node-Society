@@ -1,0 +1,49 @@
+Community Houdini File License (CHFL)
+
+Version 1.0 – Updated June 2025
+
+By contributing to or downloading from this repository, you agree to the following terms:
+
+---
+
+1. PERMITTED USES  
+You may:
+- View and study the contents of the repository.
+- Use the files for personal education, experimentation, and learning purposes.
+- Build your own original work based on techniques, workflows, or concepts learned from these files.
+
+---
+
+2. RESTRICTIONS  
+You may not:
+- Use any file or substantial portion of it directly in commercial work.
+- Redistribute, reupload, or resell any of the contents, whether modified or not.
+- Claim authorship of any file or present another contributor’s work as your own.
+
+---
+
+3. CONTRIBUTOR TERMS  
+By submitting files to this repository:
+- You affirm that you are the original creator of the content or have the right to share it.
+- You grant the maintainers permission to host and distribute your submission under the terms of this license **unless you explicitly include your own license file** within your submission folder.
+- If a file or submission includes its own license (e.g. `LICENSE`, `LICENSE.txt`, or clear license text in a README), that license takes precedence **only for that specific submission**.
+
+---
+
+4. ATTRIBUTION  
+If you share work publicly that was inspired by these files, you are encouraged to credit the original author(s) or the community repository where appropriate.
+
+---
+
+5. LIABILITY  
+This content is provided “as is,” with no warranties or guarantees. The maintainers and contributors are not liable for any losses or damages resulting from its use.
+
+---
+
+6. CONTACT  
+For questions, special permissions, or commercial licensing inquiries, please contact the repository maintainers.
+
+---
+
+This license is designed to support a learning-focused Houdini community while protecting contributors from unwanted commercial reuse or redistribution of their work.
+
