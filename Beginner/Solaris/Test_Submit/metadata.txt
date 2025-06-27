@@ -1,0 +1,7 @@
+Title: Test Submit
+Description: This is a test submit
+Houdini Version: 20.5
+Main Nodes Used: 
+Author: Inside The Mind
+Skill Level: Beginner
+Category: Solaris
