@@ -1,0 +1,7 @@
+Title: Test
+Description: This is a test
+Houdini Version: 20.5
+Main Nodes Used: 
+Author: Test Name
+Skill Level: Beginner
+Category: SOPs
