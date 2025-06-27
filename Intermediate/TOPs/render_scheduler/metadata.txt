@@ -1,0 +1,7 @@
+Title: render_scheduler
+Description: schedules multi-shot renders in LOPs using TOPs
+Houdini Version: 20.5
+Main Nodes Used: 
+Author: Taylor
+Skill Level: Intermediate
+Category: TOPs
