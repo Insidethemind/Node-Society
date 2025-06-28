@@ -1,0 +1,5 @@
+Collected assets for: untitled.hip
+
+Copied HIP file: C:/Users/Jorge/untitled.hip -> C:/Users/Jorge/Pictures\Hou_Collect_untitled\untitled.hip
+Copied file: X:/HDR/JL_RoundFalloffBright.hdr -> C:/Users/Jorge/Pictures\Hou_Collect_untitled\assets\images\JL_RoundFalloffBright.hdr
+Skipped directory: C:/Users/Jorge
