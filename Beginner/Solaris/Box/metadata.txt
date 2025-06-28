@@ -1,7 +1,0 @@
-Title: Box
-Description: Box and dome light
-Houdini Version: Houdini 20.5.550
-Main Nodes Used: Box, Dome light
-Author: jorgelega
-Skill Level: Beginner
-Category: Solaris
