@@ -1,8 +1,0 @@
-Title: test
-Description: test
-Houdini Version: 20.5
-Main Nodes Used: 
-Type: Project File
-Author: Insidethemind
-Skill Level: Beginner
-Category: SOPs
