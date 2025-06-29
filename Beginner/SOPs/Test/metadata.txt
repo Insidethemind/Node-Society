@@ -1,7 +1,0 @@
-Title: Test
-Description: Test
-Houdini Version: 20.5
-Main Nodes Used: Test Geo Crag
-Author: Taubhick
-Skill Level: Beginner
-Category: SOPs
