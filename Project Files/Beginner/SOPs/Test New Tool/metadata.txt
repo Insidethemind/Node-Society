@@ -1,0 +1,8 @@
+Title: Test New Tool
+Description: Test description
+Houdini Version: 20.5
+Main Nodes Used: 
+Author: Insidethemind
+Type: Project Files
+Skill Level: Beginner
+Category: SOPs
