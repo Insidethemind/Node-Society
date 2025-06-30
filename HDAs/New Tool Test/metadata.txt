@@ -1,8 +1,0 @@
-Title: New Tool Test
-Description: Test
-Houdini Version: 20.5
-Main Nodes Used: 
-Author: Stormzfail
-Type: HDAs
-Skill Level: 
-Category:
