@@ -1,5 +1,5 @@
 Title: Test
-Description: Test Description
+Description: Test
 Houdini Version: 20.5
 Main Nodes Used: 
 Author: Stormzfail
