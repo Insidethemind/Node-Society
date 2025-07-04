@@ -1,4 +1,0 @@
-Collected assets for: Tracing.hip
-
-Copied HIP file: C:/Users/jorge/Tracing.hip -> C:/Users/jorge/OneDrive/Desktop/NodeSociety\Hou_Collect_Tracing\Tracing.hip
-Skipped directory: C:/Users/jorge
