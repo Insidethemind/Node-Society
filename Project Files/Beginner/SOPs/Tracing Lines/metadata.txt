@@ -1,9 +1,0 @@
-Title: Tracing Lines
-Description: Simple animation using find shortest path and carve node
-Houdini Version: Houdini 20.5
-Tags: Beginner, Solaris, SOP
-Author: MographFX
-Type: Project Files
-Skill Level: Beginner
-Category: SOPs
-Simulation Type:
