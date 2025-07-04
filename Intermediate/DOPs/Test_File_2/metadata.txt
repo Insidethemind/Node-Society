@@ -1,7 +1,0 @@
-Title: Test File 2
-Description: This is a test
-Houdini Version: 20.5
-Main Nodes Used: 
-Author: Inside The Mind
-Skill Level: Intermediate
-Category: DOPs
