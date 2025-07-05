@@ -1,8 +1,9 @@
 Title: Test
-Description: Test
-Houdini Version: 20.5
-Main Nodes Used: 
+Description: test
+Houdini Version: 20.5.550
+Tags: Beginner, SOPs, VEX
 Author: Stormzfail
 Type: Project Files
 Skill Level: Beginner
 Category: SOPs
+Simulation Type:
