@@ -31,6 +31,8 @@ This community is not a platform for self-promotion, portfolio exposure, or driv
 
 Please share resources that reflect the spirit of collaboration and growth.
 
+With that in mind, you are allowed to include a AuthorInfo.txt file that includes links to your social media, website, Patreon etc.
+
 ## License
 
 All contributions to this repository are covered under the [Community Houdini File License](./License.txt) by default.
