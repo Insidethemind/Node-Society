@@ -1,23 +1,18 @@
 name: Manual Metadata Update (Self-Hosted)
 
 on:
-  workflow_dispatch:  
+  workflow_dispatch:
 
 jobs:
   update-index:
-    runs-on: self-hosted  
+    runs-on: self-hosted
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
-
       - name: Run metadata collection script
-        run: |
-          python .github/scripts/collect_metadata.py
+        run: python .github/scripts/collect_metadata.py
 
       - name: Commit and push metadata index
         run: |
