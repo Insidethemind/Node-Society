@@ -15,16 +15,18 @@ jobs:
         run: python .github/scripts/collect_metadata.py
 
       - name: Commit and push metadata index
-        shell: powershell
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GH_PUSH_TOKEN }}  
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add metadata_index.json
+          git add docs/metadata_index.json
 
-          git diff --cached --quiet
-          if ($LASTEXITCODE -ne 0) {
-            git commit -m "Manual metadata index update via self-hosted runner"
-            git push
-          } else {
+          if ! git diff --cached --quiet; then
+            git commit -m "Metadata index auto-update via self-hosted runner"
+            git remote set-url origin https://x-access-token:${GH_TOKEN}@github.com/Insidethemind/Node-Society.git
+            git push origin main
+          else
             echo "No changes to commit."
-          }
+          fi
