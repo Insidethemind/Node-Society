@@ -15,9 +15,15 @@ jobs:
         run: python .github/scripts/collect_metadata.py
 
       - name: Commit and push metadata index
+        shell: pwsh
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add metadata_index.json
-          git diff --cached --quiet || git commit -m "Manual metadata index update via self-hosted runner"
-          git push
+
+          $changes = git diff --cached --quiet; if ($LASTEXITCODE -ne 0) {
+            git commit -m "Manual metadata index update via self-hosted runner"
+            git push
+          } else {
+            echo "No changes to commit."
+          }
