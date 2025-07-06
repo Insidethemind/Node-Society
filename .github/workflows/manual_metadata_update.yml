@@ -19,5 +19,5 @@ jobs:
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add metadata_index.json
-          git commit -m "Manual metadata index update via self-hosted runner" || echo "No changes to commit"
+          git diff --cached --quiet || git commit -m "Manual metadata index update via self-hosted runner"
           git push
