@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Node Society Metadata Explorer</title>
+  <style>
+    body { font-family: sans-serif; padding: 2em; background: #111; color: #eee; }
+    input, select { margin: 0.5em; padding: 0.5em; background: #222; color: #eee; border: 1px solid #444; }
+    table { width: 100%; border-collapse: collapse; margin-top: 1em; }
+    th, td { padding: 0.75em; border-bottom: 1px solid #444; }
+    tr:hover { background-color: #222; }
+  </style>
+</head>
+<body>
+  <h1>Node Society Metadata Explorer</h1>
+
+  <label>
+    Search:
+    <input type="text" id="searchInput" placeholder="Enter keyword (e.g. VEX)">
+  </label>
+
+  <label>
+    Skill Level:
+    <select id="skillSelect">
+      <option value="">All</option>
+      <option value="Beginner">Beginner</option>
+      <option value="Intermediate">Intermediate</option>
+      <option value="Advanced">Advanced</option>
+    </select>
+  </label>
+
+  <table id="metadataTable">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Skill</th>
+        <th>Author</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    const metadataUrl = 'https://insidethemind.github.io/Node-Society/metadata_index.json';
+
+    async function loadMetadata() {
+      const res = await fetch(metadataUrl);
+      const data = await res.json();
+      window.metadata = data;
+      renderTable(data);
+    }
+
+    function renderTable(data) {
+      const tbody = document.querySelector('#metadataTable tbody');
+      tbody.innerHTML = '';
+
+      data.forEach(item => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+          <td>${item.title}</td>
+          <td>${item.category}</td>
+          <td>${item.skill}</td>
+          <td>${item.author}</td>
+          <td><a href="${item.download}" target="_blank">Download</a></td>
+        `;
+        tbody.appendChild(row);
+      });
+    }
+
+    function applyFilters() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const skill = document.getElementById('skillSelect').value;
+
+      const filtered = window.metadata.filter(item => {
+        const matchesSkill = skill ? item.skill === skill : true;
+        const matchesSearch = item.title.toLowerCase().includes(searchTerm) ||
+                              item.category.toLowerCase().includes(searchTerm) ||
+                              item.author.toLowerCase().includes(searchTerm);
+        return matchesSkill && matchesSearch;
+      });
+
+      renderTable(filtered);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', applyFilters);
+    document.getElementById('skillSelect').addEventListener('change', applyFilters);
+
+    loadMetadata();
+  </script>
+</body>
+</html>
