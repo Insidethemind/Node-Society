@@ -27,7 +27,8 @@ for root, dirs, files in os.walk("."):
         except Exception as e:
             print(f"Failed to parse {filepath}: {e}")
 
-with open("metadata_index.json", "w", encoding="utf-8") as f:
+output_path = "metadata_index.json"
+with open(output_path, "w", encoding="utf-8") as f:
     json.dump(metadata_index, f, indent=2)
 
-print(f"{len(metadata_index)} metadata entries written to metadata_index.json")
+print(f"{len(metadata_index)} metadata entries written to {output_path}")
