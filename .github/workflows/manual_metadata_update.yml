@@ -15,13 +15,14 @@ jobs:
         run: python .github/scripts/collect_metadata.py
 
       - name: Commit and push metadata index
-        shell: pwsh
+        shell: powershell
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
           git add metadata_index.json
 
-          $changes = git diff --cached --quiet; if ($LASTEXITCODE -ne 0) {
+          git diff --cached --quiet
+          if ($LASTEXITCODE -ne 0) {
             git commit -m "Manual metadata index update via self-hosted runner"
             git push
           } else {
