@@ -1,9 +1,0 @@
-Title: Test 2
-Description: Test
-Houdini Version: 20.5
-Tags: 
-Author: Stormzfail
-Type: Project Files
-Skill Level: Beginner
-Category: VEX
-Simulation Type:
