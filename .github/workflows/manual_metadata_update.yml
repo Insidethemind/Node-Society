@@ -1,15 +1,15 @@
-name: Manual Metadata Update (Self-Hosted)
+name: update-index
 
 on:
   workflow_dispatch:
 
 jobs:
-  update-index:
-    runs-on: self-hosted
+  build:
+    runs-on: [self-hosted, windows]
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Run metadata collection script
         run: python .github/scripts/collect_metadata.py
@@ -19,12 +19,13 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
+
           git add metadata_index.json
 
-          git diff --cached --quiet
-          if ($LASTEXITCODE -ne 0) {
+          if (-not (git diff --cached --quiet)) {
             git commit -m "Manual metadata index update via self-hosted runner"
-            git push
+            git remote set-url origin "https://x-access-token:${env:GH_PUSH_TOKEN}@github.com/Insidethemind/Node-Society.git"
+            git push origin main
           } else {
-            echo "No changes to commit."
+            Write-Host "No changes to commit."
           }
