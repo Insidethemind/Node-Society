@@ -1,6 +1,9 @@
 import os
 import json
 
+output_dir = "docs"
+os.makedirs(output_dir, exist_ok=True)
+
 required_fields = [
     "Title", "Description", "Houdini Version", "Tags", "Author",
     "Type", "Skill Level", "Category", "Simulation Type"
@@ -8,7 +11,6 @@ required_fields = [
 
 metadata_index = []
 
-# Recursively find all metadata.txt files
 for root, dirs, files in os.walk("."):
     if "metadata.txt" in files:
         filepath = os.path.join(root, "metadata.txt")
@@ -28,6 +30,8 @@ for root, dirs, files in os.walk("."):
         except Exception as e:
             print(f"Failed to parse {filepath}: {e}")
 
-# Save output JSON
-with open("metadata_index.json", "w", encoding="utf-8") as f:
+output_path = os.path.join(output_dir, "metadata_index.json")
+with open(output_path, "w", encoding="utf-8") as f:
     json.dump(metadata_index, f, indent=2)
+
+print(f"✅ {len(metadata_index)} metadata entries written to {output_path}")
