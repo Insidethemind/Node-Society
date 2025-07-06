@@ -41,7 +41,7 @@ This content is provided “as is,” with no warranties or guarantees. The main
 ---
 
 6. CONTACT  
-For questions, special permissions, or commercial licensing inquiries, please contact the repository maintainers.
+For questions, special permissions, or commercial licensing inquiries, please contact the folder authors.
 
 ---
 
