@@ -1,0 +1,34 @@
+name: Update Metadata Index
+
+on:
+  push:
+    paths:
+      - '**/metadata.txt'
+  pull_request:
+    paths:
+      - '**/metadata.txt'
+
+jobs:
+  update-index:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Run metadata collection script
+        run: |
+          python .github/scripts/collect_metadata.py
+
+      - name: Commit and push metadata index
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add metadata_index.json
+          git commit -m "Auto-update metadata index" || echo "No changes to commit"
+          git push
