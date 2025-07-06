@@ -1,0 +1,11 @@
+Title: Auto PDG Variant Creation and Rendering - River Rocks Example
+Description: Example file of using PDG to create, texture, render, and composite procedurally generated USD variants - all in TOPs
+
+Created by Zak Katara
+Houdini Version: 20.5
+Tags: Intermediate, Procedural Modeling, TOPs, Karma, USD, Solaris
+Author: zkatara
+Type: Project Files
+Skill Level: Intermediate
+Category: TOPs
+Simulation Type:
