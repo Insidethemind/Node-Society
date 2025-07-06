@@ -19,13 +19,12 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-          git add docs/metadata_index.json
+          git add metadata_index.json
 
-          if (-not (git diff --cached --quiet)) {
-            git commit -m "Metadata index auto-update via self-hosted runner"
-
-            git remote set-url origin "https://x-access-token:$env:GH_PUSH_TOKEN@github.com/Insidethemind/Node-Society.git"
-            git push origin main
+          git diff --cached --quiet
+          if ($LASTEXITCODE -ne 0) {
+            git commit -m "Manual metadata index update via self-hosted runner"
+            git push
           } else {
-            Write-Host "No changes to commit."
+            echo "No changes to commit."
           }
