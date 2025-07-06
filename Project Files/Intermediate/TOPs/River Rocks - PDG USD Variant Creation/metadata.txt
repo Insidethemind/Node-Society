@@ -1,0 +1,9 @@
+Title: River Rocks - PDG USD Variant Creation
+Description: PDG/TOPs driven pipeline from asset creation to final render and comp. This file shows how to use pdg to generate assets, texture them, store them as USD variants, assemble in a solaris scene, and render and comp - all within a single dependency graph.
+Houdini Version: 20.5
+Tags: Solaris, TOPs, Karma, Intermediate, Procedural Modeling, USD
+Author: zkatara
+Type: Project Files
+Skill Level: Intermediate
+Category: TOPs
+Simulation Type:
