@@ -34,4 +34,4 @@ output_path = os.path.join(output_dir, "metadata_index.json")
 with open(output_path, "w", encoding="utf-8") as f:
     json.dump(metadata_index, f, indent=2)
 
-print(f"✅ {len(metadata_index)} metadata entries written to {output_path}")
+print(f"{len(metadata_index)} metadata entries written to {output_path}")
