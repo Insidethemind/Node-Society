@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  update-index:
     runs-on: [self-hosted, windows]
 
     steps:
@@ -14,17 +14,21 @@ jobs:
       - name: Run metadata collection script
         run: python .github/scripts/collect_metadata.py
 
+      - name: Trust repo path
+        shell: powershell
+        run: git config --global --add safe.directory "$PWD"
+
       - name: Commit and push metadata index
         shell: powershell
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
-
+          
           git add metadata_index.json
-
+          
           if (-not (git diff --cached --quiet)) {
             git commit -m "Manual metadata index update via self-hosted runner"
-            git remote set-url origin "https://x-access-token:${env:GH_PUSH_TOKEN}@github.com/Insidethemind/Node-Society.git"
+            git remote set-url origin "https://${env:GH_PUSH_TOKEN}@github.com/Insidethemind/Node-Society.git"
             git push origin main
           } else {
             Write-Host "No changes to commit."
