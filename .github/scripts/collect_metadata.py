@@ -1,11 +1,5 @@
 import os
 import json
-from pathlib import Path
-
-# Get absolute path to the repo root
-repo_root = Path(__file__).resolve().parents[2]
-output_dir = repo_root / "docs"
-output_dir.mkdir(parents=True, exist_ok=True)
 
 required_fields = [
     "Title", "Description", "Houdini Version", "Tags", "Author",
@@ -14,7 +8,7 @@ required_fields = [
 
 metadata_index = []
 
-for root, dirs, files in os.walk(repo_root):
+for root, dirs, files in os.walk("."):
     if "metadata.txt" in files:
         filepath = os.path.join(root, "metadata.txt")
         entry = {field: "" for field in required_fields}
@@ -28,13 +22,12 @@ for root, dirs, files in os.walk(repo_root):
                         value = value.strip()
                         if key in entry:
                             entry[key] = value
-            entry["Path"] = filepath.replace("\\", "/").replace(str(repo_root), "").lstrip("/")
+            entry["Path"] = filepath.replace("\\", "/")
             metadata_index.append(entry)
         except Exception as e:
             print(f"Failed to parse {filepath}: {e}")
 
-output_path = output_dir / "metadata_index.json"
-with open(output_path, "w", encoding="utf-8") as f:
+with open("metadata_index.json", "w", encoding="utf-8") as f:
     json.dump(metadata_index, f, indent=2)
 
-print(f"{len(metadata_index)} metadata entries written to {output_path}")
+print(f"{len(metadata_index)} metadata entries written to metadata_index.json")
