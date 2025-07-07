@@ -33,10 +33,10 @@ for root, _, files in os.walk("."):
             output.append(entry)
 
 # Ensure the output directory exists
-os.makedirs("combined", exist_ok=True)
+os.makedirs("docs", exist_ok=True)
 
 # Write out the combined metadata as JSON
-with open("combined/all_metadata_combined.json", "w", encoding="utf-8") as out_file:
+with open("docs/all_metadata_combined.json", "w", encoding="utf-8") as out_file:
     json.dump(output, out_file, indent=2)
 
 print(f"Combined {len(output)} metadata files into combined/all_metadata_combined.json")
