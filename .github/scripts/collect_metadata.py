@@ -1,31 +1,33 @@
 import os
 import json
 
-def collect_metadata(base_path="."):
-    metadata_entries = []
+output = []
+fields = [
+    "Title",
+    "Description",
+    "Houdini Version",
+    "Tags",
+    "Author",
+    "Type",
+    "Skill Level",
+    "Category",
+    "Simulation Type"
+]
 
-    for root, dirs, files in os.walk(base_path):
-        if "metadata.txt" in files:
-            metadata_path = os.path.join(root, "metadata.txt")
-            with open(metadata_path, "r", encoding="utf-8") as f:
-                lines = f.readlines()
+for root, _, files in os.walk("."):
+    for file in files:
+        if file == "metadata.txt":
+            entry = {field: "" for field in fields}
+            with open(os.path.join(root, file), "r", encoding="utf-8") as f:
+                for line in f:
+                    if ':' in line:
+                        key, value = line.split(':', 1)
+                        key = key.strip()
+                        value = value.strip()
+                        if key in entry:
+                            entry[key] = value
+            output.append(entry)
 
-            entry = {"path": os.path.relpath(root, base_path)}
-            for line in lines:
-                if ":" in line:
-                    key, value = line.split(":", 1)
-                    entry[key.strip()] = value.strip()
-            metadata_entries.append(entry)
-
-    return metadata_entries
-
-if __name__ == "__main__":
-    base_path = "."
-    output_path = "metadata_index.json"
-
-    metadata = collect_metadata(base_path)
-
-    with open(output_path, "w", encoding="utf-8") as f:
-        json.dump(metadata, f, indent=2)
-
-    print(f"{len(metadata)} metadata entries written to {output_path}")
+os.makedirs("combined", exist_ok=True)
+with open("combined/all_metadata_combined.json", "w", encoding="utf-8") as out_file:
+    json.dump(output, out_file, indent=2)
