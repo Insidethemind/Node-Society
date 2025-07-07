@@ -5,11 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Node Society Metadata Explorer</title>
   <style>
-    body { font-family: sans-serif; padding: 2em; background: #111; color: #eee; }
-    input, select { margin: 0.5em; padding: 0.5em; background: #222; color: #eee; border: 1px solid #444; }
-    table { width: 100%; border-collapse: collapse; margin-top: 1em; }
-    th, td { padding: 0.75em; border-bottom: 1px solid #444; }
-    tr:hover { background-color: #222; }
+    body {
+      font-family: sans-serif;
+      padding: 2em;
+      background: #111;
+      color: #eee;
+    }
+    input, select {
+      margin: 0.5em;
+      padding: 0.5em;
+      background: #222;
+      color: #eee;
+      border: 1px solid #444;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 1em;
+    }
+    th, td {
+      padding: 0.75em;
+      border-bottom: 1px solid #444;
+    }
+    th {
+      text-align: left;
+    }
+    tr:hover {
+      background-color: #222;
+    }
+    a {
+      color: #4ea5f0;
+    }
   </style>
 </head>
 <body>
@@ -44,7 +70,7 @@
   </table>
 
   <script>
-    const metadataUrl = 'https://insidethemind.github.io/Node-Society/all_metadata_combined.json';
+    const metadataUrl = 'all_metadata_combined.json'; // file lives in the same folder
 
     async function loadMetadata() {
       const res = await fetch(metadataUrl);
@@ -60,11 +86,11 @@
       data.forEach(item => {
         const row = document.createElement('tr');
         row.innerHTML = `
-          <td>${item.title}</td>
-          <td>${item.category}</td>
-          <td>${item.skill}</td>
-          <td>${item.author}</td>
-          <td><a href="${item.download}" target="_blank">Download</a></td>
+          <td>${item["Title"] || ""}</td>
+          <td>${item["Category"] || ""}</td>
+          <td>${item["Skill Level"] || ""}</td>
+          <td>${item["Author"] || ""}</td>
+          <td><a href="#" onclick="alert('Link not set'); return false;">Download</a></td>
         `;
         tbody.appendChild(row);
       });
@@ -75,10 +101,11 @@
       const skill = document.getElementById('skillSelect').value;
 
       const filtered = window.metadata.filter(item => {
-        const matchesSkill = skill ? item.skill === skill : true;
-        const matchesSearch = item.title.toLowerCase().includes(searchTerm) ||
-                              item.category.toLowerCase().includes(searchTerm) ||
-                              item.author.toLowerCase().includes(searchTerm);
+        const matchesSkill = skill ? item["Skill Level"] === skill : true;
+        const matchesSearch =
+          (item["Title"] || "").toLowerCase().includes(searchTerm) ||
+          (item["Category"] || "").toLowerCase().includes(searchTerm) ||
+          (item["Author"] || "").toLowerCase().includes(searchTerm);
         return matchesSkill && matchesSearch;
       });
 
