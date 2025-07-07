@@ -15,10 +15,11 @@ jobs:
       run: python .github/scripts/collect_metadata.py
 
     - name: Commit and Push Combined Metadata JSON
-      shell: bash  
       run: |
         git config user.name "github-actions"
         git config user.email "github-actions@github.com"
         git add combined/all_metadata_combined.json
-        git commit -m "Update combined metadata JSON" || echo "No changes to commit"
-        git push
+        git diff --cached --quiet || (
+          git commit -m "Update combined metadata JSON"
+          git push
+        )
