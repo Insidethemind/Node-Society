@@ -102,15 +102,18 @@
 
       const filtered = window.metadata.filter(item => {
         const matchesSkill = skill ? item["Skill Level"] === skill : true;
-        const matchesSearch =
-          (item["Title"] || "").toLowerCase().includes(searchTerm) ||
-          (item["Category"] || "").toLowerCase().includes(searchTerm) ||
-          (item["Author"] || "").toLowerCase().includes(searchTerm);
+
+        // Check if search term is in ANY field
+        const matchesSearch = Object.values(item).some(value =>
+          value && value.toString().toLowerCase().includes(searchTerm)
+        );
+
         return matchesSkill && matchesSearch;
       });
 
       renderTable(filtered);
     }
+
 
     document.getElementById('searchInput').addEventListener('input', applyFilters);
     document.getElementById('skillSelect').addEventListener('change', applyFilters);
