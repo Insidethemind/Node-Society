@@ -1,8 +1,6 @@
-name: Combine Metadata Files to JSON (Python)
+name: Manual Metadata Update (Python)
 
 on:
-  push:
-    branches: [ main ]
   workflow_dispatch:  
 
 jobs:
@@ -14,7 +12,7 @@ jobs:
       uses: actions/checkout@v3
 
     - name: Run Python Script to Combine Metadata
-      run: python .github/scripts/combine_metadata.py
+      run: python .github/scripts/collect_metadata.py
 
     - name: Commit and Push Combined Metadata JSON
       run: |
