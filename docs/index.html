@@ -1,124 +1,105 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Node Society Metadata Explorer</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      padding: 2em;
-      background: #111;
-      color: #eee;
-    }
-    input, select {
-      margin: 0.5em;
-      padding: 0.5em;
-      background: #222;
-      color: #eee;
-      border: 1px solid #444;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 1em;
-    }
-    th, td {
-      padding: 0.75em;
-      border-bottom: 1px solid #444;
-    }
-    th {
-      text-align: left;
-    }
-    tr:hover {
-      background-color: #222;
-    }
-    a {
-      color: #4ea5f0;
-    }
-  </style>
-</head>
-<body>
-  <h1>Node Society Metadata Explorer</h1>
-
-  <label>
-    Search:
-    <input type="text" id="searchInput" placeholder="Enter keyword (e.g. VEX)">
-  </label>
-
-  <label>
-    Skill Level:
-    <select id="skillSelect">
-      <option value="">All</option>
-      <option value="Beginner">Beginner</option>
-      <option value="Intermediate">Intermediate</option>
-      <option value="Advanced">Advanced</option>
-    </select>
-  </label>
-
-  <table id="metadataTable">
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Skill</th>
-        <th>Author</th>
-        <th>Link</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <script>
-    const metadataUrl = 'all_metadata_combined.json'; // file lives in the same folder
+<!DOCTYPE html> 
+<html lang="en"> 
+    <head> 
+        <meta charset="UTF-8"/> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+        <title>Node Society Metadata Explorer</title>         
+        <link rel="icon" type="image/svg-xml" href="NodeSociety.svg"/> 
+        <script src="https://cdn.tailwindcss.com"></script>         
+    </head>     
+    <body class="bg-gray-900 text-gray-100 p-8"> 
+        <div class="max-w-7xl mx-auto text-center"> 
+            <h1 class="text-3xl font-bold mb-6">Node Society Metadata Explorer</h1> 
+            <div class="flex flex-wrap justify-center gap-4 mb-6"> 
+                <input type="text" id="searchInput" placeholder="Search..." class="px-4 py-2 bg-gray-800 border border-gray-700 rounded w-full sm:w-96"/> 
+                <select id="skillSelect" class="px-4 py-2 bg-gray-800 border border-gray-700 rounded w-full sm:w-60"> 
+                    <option value="">All Skill Levels</option>                     
+                    <option value="Beginner">Beginner</option>                     
+                    <option value="Intermediate">Intermediate</option>                     
+                    <option value="Advanced">Advanced</option>                     
+                </select>                 
+            </div>             
+            <div id="cardsContainer" class="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 justify-items-center"></div>             
+        </div>         
+        <script>
+    const metadataUrl = "all_metadata_combined.json";
 
     async function loadMetadata() {
-      const res = await fetch(metadataUrl);
-      const data = await res.json();
-      window.metadata = data;
-      renderTable(data);
+      try {
+        const res = await fetch(metadataUrl);
+        const data = await res.json();
+        window.metadata = data;
+        renderCards(data);
+      } catch (err) {
+        console.error("Error loading metadata:", err);
+      }
     }
 
-    function renderTable(data) {
-      const tbody = document.querySelector('#metadataTable tbody');
-      tbody.innerHTML = '';
+    function derivePreviewImageUrl(downloadUrl) {
+      try {
+        const url = new URL(downloadUrl);
+        const segments = url.pathname.split("/");
+        const treeIndex = segments.indexOf("tree");
+        if (treeIndex === -1 || segments.length <= treeIndex + 2) return null;
+
+        const pathSegments = segments.slice(treeIndex + 2);
+        const rawPath = pathSegments.join("/");
+        return `https://raw.githubusercontent.com/Insidethemind/Node-Society/main/${rawPath}/preview.jpg`;
+      } catch {
+        return null;
+      }
+    }
+
+    function renderCards(data) {
+      const container = document.getElementById("cardsContainer");
+      container.innerHTML = "";
 
       data.forEach(item => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-          <td>${item["Title"] || ""}</td>
-          <td>${item["Category"] || ""}</td>
-          <td>${item["Skill Level"] || ""}</td>
-          <td>${item["Author"] || ""}</td>
-          <a href="${item["Download"]}" target="_blank">View</a>
+        const title = item["Title"] || "Untitled";
+        const category = item["Category"] || "-";
+        const skill = item["Skill Level"] || "-";
+        const author = item["Author"] || "-";
+        const download = item["Download"] || "#";
+        const imageUrl = derivePreviewImageUrl(download);
+
+        const card = document.createElement("div");
+        card.className = "bg-gray-800 p-4 rounded shadow w-full max-w-[400px] h-[400px] flex flex-col justify-between";
+
+        const imageTag = `<div class='w-full h-40 mb-4 rounded bg-gray-700 flex items-center justify-center'>
+          ${imageUrl ? `<img src="${imageUrl}" alt="${title}" class="w-full h-full object-cover rounded" onerror="this.style.display='none'"/>` : `<span class='text-sm text-gray-400'>No preview</span>`}
+        </div>`;
+
+        card.innerHTML = `
+          ${imageTag}
+          <div>
+            <h2 class="text-xl font-semibold mb-2">${title}</h2>
+            <p><span class="text-gray-400">Category:</span> ${category}</p>
+            <p><span class="text-gray-400">Skill:</span> ${skill}</p>
+            <p><span class="text-gray-400">Author:</span> ${author}</p>
+          </div>
+          <a href="${download}" target="_blank" class="inline-block mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded">Download</a>
         `;
-        tbody.appendChild(row);
+
+        container.appendChild(card);
       });
     }
 
     function applyFilters() {
-      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-      const skill = document.getElementById('skillSelect').value;
+      const search = document.getElementById("searchInput").value.toLowerCase();
+      const skillFilter = document.getElementById("skillSelect").value;
 
       const filtered = window.metadata.filter(item => {
-        const matchesSkill = skill ? item["Skill Level"] === skill : true;
-
-        // Check if search term is in ANY field
-        const matchesSearch = Object.values(item).some(value =>
-          value && value.toString().toLowerCase().includes(searchTerm)
-        );
-
-        return matchesSkill && matchesSearch;
+        const combined = `${item["Title"]} ${item["Category"]} ${item["Skill Level"]} ${item["Author"]} ${item["Tags"]} ${item["Description"]}`.toLowerCase();
+        return combined.includes(search) && (!skillFilter || item["Skill Level"] === skillFilter);
       });
 
-      renderTable(filtered);
+      renderCards(filtered);
     }
 
-
-    document.getElementById('searchInput').addEventListener('input', applyFilters);
-    document.getElementById('skillSelect').addEventListener('change', applyFilters);
+    document.getElementById("searchInput").addEventListener("input", applyFilters);
+    document.getElementById("skillSelect").addEventListener("change", applyFilters);
 
     loadMetadata();
-  </script>
-</body>
+  </script>         
+    </body>     
 </html>
