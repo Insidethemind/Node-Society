@@ -14,7 +14,7 @@ jobs:
     - name: Run Python Script to Combine Metadata
       run: python .github/scripts/collect_metadata.py
 
-    - name: Check for Git Changes and Commit
+    - name: Commit and Push Combined Metadata JSON
       run: |
         git config user.name "github-actions"
         git config user.email "github-actions@github.com"
@@ -23,6 +23,7 @@ jobs:
         $status = git status --porcelain
         if ($status) {
           git commit -m "Update combined metadata JSON"
+          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/Insidethemind/Node-Society.git
           git push
         } else {
           Write-Output "No changes to commit"
