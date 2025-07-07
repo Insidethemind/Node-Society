@@ -90,7 +90,7 @@
           <td>${item["Category"] || ""}</td>
           <td>${item["Skill Level"] || ""}</td>
           <td>${item["Author"] || ""}</td>
-          <td><a href="#" onclick="alert('Link not set'); return false;">Download</a></td>
+          <a href="${item["Download"]}" target="_blank">View</a>
         `;
         tbody.appendChild(row);
       });
