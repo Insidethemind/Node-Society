@@ -1,35 +1,26 @@
-name: update-index
+name: Combine Metadata Files to JSON (Python)
 
 on:
-  workflow_dispatch:
+  push:
+    branches: [ main ]
 
 jobs:
-  update-index:
-    runs-on: [self-hosted, windows]
+  combine:
+    runs-on: self-hosted
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+    - name: Checkout Repository
+      uses: actions/checkout@v3
 
-      - name: Run metadata collection script
-        run: python .github/scripts/collect_metadata.py
+    - name: Run Python Script to Combine Metadata
+      run: |
+        python combine_metadata.py
 
-      - name: Trust repo path
-        shell: powershell
-        run: git config --global --add safe.directory "$PWD"
+    - name: Commit and Push Combined Metadata JSON
+      run: |
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
 
-      - name: Commit and push metadata index
-        shell: powershell
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          
-          git add metadata_index.json
-          
-          if (-not (git diff --cached --quiet)) {
-            git commit -m "Manual metadata index update via self-hosted runner"
-            git remote set-url origin "https://${env:GH_PUSH_TOKEN}@github.com/Insidethemind/Node-Society.git"
-            git push origin main
-          } else {
-            Write-Host "No changes to commit."
-          }
+        git add combined/all_metadata_combined.json
+        git commit -m "Update combined metadata JSON" || echo "No changes to commit"
+        git push
