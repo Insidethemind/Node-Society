@@ -8,15 +8,13 @@ jobs:
     runs-on: self-hosted
 
     steps:
-    - name: Checkout Repository
+    - name: Checkout Repository with Push Access
       uses: actions/checkout@v3
+      with:
+        token: ${{ secrets.GH_PAT }}  
 
     - name: Run Python Script to Combine Metadata
       run: python .github/scripts/collect_metadata.py
-
-    - name: Set Git Remote with Personal Access Token
-      run: |
-        git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/Insidethemind/Node-Society.git
 
     - name: Commit and Push Combined Metadata JSON
       run: |
