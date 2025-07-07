@@ -1,35 +1,40 @@
-name: Update Metadata Index
+import os
+import json
 
-on:
-  workflow_dispatch: 
-  push:
-    paths:
-      - '**/metadata.txt'
-  pull_request:
-    paths:
-      - '**/metadata.txt'
+output = []
 
-jobs:
-  update-index:
-    runs-on: ubuntu-latest
+# Define expected metadata fields
+fields = [
+    "Title",
+    "Description",
+    "Houdini Version",
+    "Tags",
+    "Author",
+    "Type",
+    "Skill Level",
+    "Category",
+    "Simulation Type"
+]
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+# Walk the repo looking for metadata.txt files
+for root, _, files in os.walk("."):
+    for file in files:
+        if file == "metadata.txt":
+            metadata_path = os.path.join(root, file)
+            entry = {field: "" for field in fields}
+            with open(metadata_path, "r", encoding="utf-8") as f:
+                for line in f:
+                    if ':' in line:
+                        key, value = line.split(':', 1)
+                        key = key.strip()
+                        value = value.strip()
+                        if key in entry:
+                            entry[key] = value
+            output.append(entry)
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.x'
+# Write combined JSON output
+os.makedirs("combined", exist_ok=True)
+with open("combined/all_metadata_combined.json", "w", encoding="utf-8") as out_file:
+    json.dump(output, out_file, indent=2)
 
-      - name: Run metadata collection script
-        run: |
-          python .github/scripts/collect_metadata.py
-
-      - name: Commit and push metadata index
-        run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
-          git add metadata_index.json
-          git commit -m "Auto-update metadata index" || echo "No changes to commit"
-          git push
+print(f"Combined {len(output)} metadata files into combined/all_metadata_combined.json")
