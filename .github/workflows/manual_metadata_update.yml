@@ -14,6 +14,10 @@ jobs:
     - name: Run Python Script to Combine Metadata
       run: python .github/scripts/collect_metadata.py
 
+    - name: Set Git Remote with Personal Access Token
+      run: |
+        git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/Insidethemind/Node-Society.git
+
     - name: Commit and Push Combined Metadata JSON
       run: |
         git config user.name "github-actions"
@@ -23,8 +27,7 @@ jobs:
         $status = git status --porcelain
         if ($status) {
           git commit -m "Update combined metadata JSON"
-          git remote set-url origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/Insidethemind/Node-Society.git
-          git push
+          git push origin HEAD:main
         } else {
           Write-Output "No changes to commit"
         }
