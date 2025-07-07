@@ -3,6 +3,7 @@ name: Combine Metadata Files to JSON (Python)
 on:
   push:
     branches: [ main ]
+  workflow_dispatch:  
 
 jobs:
   combine:
