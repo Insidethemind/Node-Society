@@ -20,7 +20,7 @@ jobs:
       run: |
         git config user.name "github-actions"
         git config user.email "github-actions@github.com"
-        git add combined/all_metadata_combined.json
+        git add docs/all_metadata_combined.json
 
         $status = git status --porcelain
         if ($status) {
