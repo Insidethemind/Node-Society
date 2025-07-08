@@ -21,6 +21,7 @@ We strongly recommend using the official [Upload Tool](./Upload%20Tool/) to subm
 - A `metadata.json` file in the correct format (automatically created if you use the Upload Tool)
 - A clear and concise title and description of the project
 - A folder structure that matches the repository's organization
+- A preview image of your project named preview.jpg
 
 ### You Must:
 - Own the rights to any files you submit
