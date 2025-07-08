@@ -45,7 +45,7 @@ You may optionally include an `author.txt` file containing only links to your we
 - The metadata format is incorrect or missing
 - The folder structure does not match the expected layout
 - The content is incomplete or lacks educational value
-- The files do not meet ownership or licensing requirements
+- The files do not meet ownership requirements
 
 ---
 
