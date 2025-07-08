@@ -7,12 +7,33 @@
         <link rel="icon" type="image/svg-xml" href="NodeSociety.svg"/> 
         <script src="https://cdn.tailwindcss.com"></script>         
     </head>     
-    <body class="bg-gray-900 text-gray-100 p-8"> 
+    <body class="bg-neutral-950 text-gray-100 p-8"> 
+        <nav class="sticky top-0 z-50 w-full py-3 bg-neutral-950"> 
+            <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center px-4 gap-2"> 
+                <div class="flex items-center gap-3"> 
+                    <img src="NodeSociety.svg" alt="Node Society Logo" class="h-10 w-10"/> <span class="text-xl font-bold">Node Society</span> 
+                </div>                 <a href="#top" class="text-white hover:text-purple-300 font-semibold transition duration-200">Home</a> 
+            </div>             
+        </nav>         
         <div class="max-w-7xl mx-auto text-center"> 
+            <img src="NodeSocietyLogo.svg" alt="Node Society Logo" class="mx-auto w-[400px] h-[400px] mb-4 object-contain"/> 
+            <p class="text-gray-300 max-w-3xl mx-auto mt-4 mb-8 text-base leading-relaxed"> 
+      Welcome to Node Society, a collaborative Houdini community dedicated to making the learning journey smoother for everyone.<br><br> 
+      Our goal is to bring artists together to share knowledge, tips, and resources that help demystify Houdini’s complexities. Whether you’re just getting started or looking to deepen your understanding, this space is built to support your growth through community-contributed files and examples.<br><br> 
+      By contributing and learning together, we aim to lower the barrier to entry and create a space where everyone can thrive. We truly believe that everyone deserves the opportunity to bring their imaginations to life and in doing so it will push everyone to improve further.<br><br>  </p> 
+            <div class="mt-8 mb-8 max-w-3xl mx-auto text-center"> 
+                <h2 class="text-2xl font-bold mb-2">Contribute Your Work</h2> 
+                <p class="text-gray-300 text-base leading-relaxed"> 
+        We welcome contributions from everyone in the community. To simplify the process, we recommend using the official Upload Tool, which automates project submission and ensures all required metadata is generated correctly.<br><br> 
+        If you prefer to contribute manually, please ensure that your submission includes a valid metadata file that follows the standard format. The Upload Tool can also be used solely to generate the metadata if you do not wish to submit directly through it.
+ </p> 
+            </div>             <a href="https://github.com/Insidethemind/Node-Society/tree/main/Upload%20Tool" target="_blank" class="inline-block mb-6 px-6 py-3 bg-purple-700 hover:bg-purple-800 text-white font-semibold rounded transform transition-transform duration-300 hover:scale-105"> 
+      Download the Upload Tool
+ </a> 
             <h1 class="text-3xl font-bold mb-6">Node Society Explorer</h1> 
             <div class="flex flex-wrap justify-center gap-4 mb-6"> 
-                <input type="text" id="searchInput" placeholder="Search... e.g. VEX, SOP, Beginner" class="px-4 py-2 bg-gray-800 border border-gray-700 rounded w-full sm:w-96"/> 
-                <select id="skillSelect" class="px-4 py-2 bg-gray-800 border border-gray-700 rounded w-full sm:w-60"> 
+                <input type="text" id="searchInput" placeholder="e.g. VEX, SOP, Beginner" class="px-4 py-2 bg-neutral-800 border border-neutral-700 text-white rounded w-full sm:w-96"/> 
+                <select id="skillSelect" class="px-4 py-2 bg-neutral-800 border border-neutral-700 text-white rounded w-full sm:w-60"> 
                     <option value="">All Skill Levels</option>                     
                     <option value="Beginner">Beginner</option>                     
                     <option value="Intermediate">Intermediate</option>                     
@@ -63,9 +84,9 @@
         const imageUrl = derivePreviewImageUrl(download);
 
         const card = document.createElement("div");
-        card.className = "bg-gray-800 p-4 rounded shadow w-full max-w-[400px] h-[400px] flex flex-col justify-between";
+        card.className = "bg-neutral-900 p-4 rounded shadow w-full max-w-[500px] h-[500px] flex flex-col justify-between transform transition-transform duration-300 hover:scale-105";
 
-        const imageTag = `<div class='w-full h-40 mb-4 rounded bg-gray-700 flex items-center justify-center'>
+        const imageTag = `<div class='w-full h-40 mb-4 rounded bg-neutral-800 flex items-center justify-center'>
           ${imageUrl ? `<img src="${imageUrl}" alt="${title}" class="w-full h-full object-cover rounded" onerror="this.style.display='none'"/>` : `<span class='text-sm text-gray-400'>No preview</span>`}
         </div>`;
 
@@ -77,7 +98,7 @@
             <p><span class="text-gray-400">Skill:</span> ${skill}</p>
             <p><span class="text-gray-400">Author:</span> ${author}</p>
           </div>
-          <a href="${download}" target="_blank" class="inline-block mt-4 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded">Download</a>
+          <a href="${download}" target="_blank" class="inline-block mt-4 px-4 py-2 bg-purple-700 hover:bg-purple-800 text-white rounded">Download</a>
         `;
 
         container.appendChild(card);
