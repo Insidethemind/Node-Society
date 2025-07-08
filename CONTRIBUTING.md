@@ -25,7 +25,7 @@ We strongly recommend using the official [Upload Tool](./Upload%20Tool/) to subm
 - The files needed for the project. Cache any required files into the project file
 
 ### DO NOT:
-- Upload simulation caches. Provide the nodes for them to be cooked by the user
+- Upload simulation caches. Provide the nodes for them to be cooked by the user instead
 - Provide any files that you do not own or do not have the rights to distribute
 
 ### You Must:
