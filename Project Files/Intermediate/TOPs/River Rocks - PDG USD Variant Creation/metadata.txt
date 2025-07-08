@@ -1,5 +1,11 @@
 Title: River Rocks - PDG USD Variant Creation
 Description: PDG/TOPs driven pipeline from asset creation to final render and comp. This file shows how to use pdg to generate assets, texture them, store them as USD variants, assemble in a solaris scene, and render and comp - all within a single dependency graph.
+
+HDRI files used can be downloaded from Polyhaven.com:
+
+https://polyhaven.com/a/brown_photostudio_06
+https://polyhaven.com/a/sunset_in_the_chalk_quarry
+
 Houdini Version: 20.5
 Tags: Solaris, TOPs, Karma, Intermediate, Procedural Modeling, USD
 Author: zkatara
