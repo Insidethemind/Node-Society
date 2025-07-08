@@ -12,6 +12,8 @@ This repository is focused on sharing educational Houdini files. Please read the
 
 We strongly recommend using the official [Upload Tool](./Upload%20Tool/) to submit files. It ensures proper formatting and generates the required metadata automatically.
 
+**It is best practice to navigate to your fork and sync before submitting. In the event of an error with the Upload Tool attempt to sync your fork and resubmit.**
+
 ---
 
 ## Requirements for Submission
