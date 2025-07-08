@@ -20,16 +20,14 @@
             <p class="text-gray-300 max-w-3xl mx-auto mt-4 mb-8 text-base leading-relaxed"> 
       Welcome to Node Society, a collaborative Houdini community dedicated to making the learning journey smoother for everyone.<br><br> 
       Our goal is to bring artists together to share knowledge, tips, and resources that help demystify Houdini’s complexities. Whether you’re just getting started or looking to deepen your understanding, this space is built to support your growth through community-contributed files and examples.<br><br> 
-      By contributing and learning together, we aim to lower the barrier to entry and create a space where everyone can thrive. We truly believe that everyone deserves the opportunity to bring their imaginations to life and in doing so it will push everyone to improve further.<br><br>  </p> 
+      By contributing and learning together, we aim to lower the barrier to entry and create a space where everyone can thrive. We truly believe that everyone deserves the opportunity to bring their imaginations to life and in doing so it will push everyone to improve further.<br><br> </p> 
             <div class="mt-8 mb-8 max-w-3xl mx-auto text-center"> 
                 <h2 class="text-2xl font-bold mb-2">Contribute Your Work</h2> 
                 <p class="text-gray-300 text-base leading-relaxed"> 
         We welcome contributions from everyone in the community. To simplify the process, we recommend using the official Upload Tool, which automates project submission and ensures all required metadata is generated correctly.<br><br> 
-        If you prefer to contribute manually, please ensure that your submission includes a valid metadata file that follows the standard format. The Upload Tool can also be used solely to generate the metadata if you do not wish to submit directly through it.
- </p> 
+        If you prefer to contribute manually, please ensure that your submission includes a valid metadata file that follows the standard format. The Upload Tool can also be used solely to generate the metadata if you do not wish to submit directly through it. </p> 
             </div>             <a href="https://github.com/Insidethemind/Node-Society/tree/main/Upload%20Tool" target="_blank" class="inline-block mb-6 px-6 py-3 bg-purple-700 hover:bg-purple-800 text-white font-semibold rounded transform transition-transform duration-300 hover:scale-105"> 
-      Download the Upload Tool
- </a> 
+      Download the Upload Tool </a> 
             <h1 class="text-3xl font-bold mb-6">Node Society Explorer</h1> 
             <div class="flex flex-wrap justify-center gap-4 mb-6"> 
                 <input type="text" id="searchInput" placeholder="e.g. VEX, SOP, Beginner" class="px-4 py-2 bg-neutral-800 border border-neutral-700 text-white rounded w-full sm:w-96"/> 
@@ -75,33 +73,49 @@
       const container = document.getElementById("cardsContainer");
       container.innerHTML = "";
 
-      data.forEach(item => {
+      data.forEach((item, index) => {
         const title = item["Title"] || "Untitled";
         const category = item["Category"] || "-";
         const skill = item["Skill Level"] || "-";
         const author = item["Author"] || "-";
         const download = item["Download"] || "#";
         const imageUrl = derivePreviewImageUrl(download);
+        const description = item["Description"] || "";
+        const shortDescription = description.length > 180 ? description.slice(0, 180).trim() + "..." : description;
 
         const card = document.createElement("div");
-        card.className = "bg-neutral-900 p-4 rounded shadow w-full max-w-[500px] h-[500px] flex flex-col justify-between transform transition-transform duration-300 hover:scale-105";
+        card.className = "bg-neutral-900 p-4 rounded w-full max-w-[400px] min-h-[400px] flex flex-col transform transition-transform duration-300 hover:scale-105 overflow-hidden";
 
         const imageTag = `<div class='w-full h-40 mb-4 rounded bg-neutral-800 flex items-center justify-center'>
           ${imageUrl ? `<img src="${imageUrl}" alt="${title}" class="w-full h-full object-cover rounded" onerror="this.style.display='none'"/>` : `<span class='text-sm text-gray-400'>No preview</span>`}
         </div>`;
 
+        const descriptionId = `desc-${index}`;
+        const readMoreId = `read-more-${index}`;
+
         card.innerHTML = `
           ${imageTag}
-          <div>
+          <div class="flex-1 overflow-auto">
             <h2 class="text-xl font-semibold mb-2">${title}</h2>
+            <div id="${descriptionId}" class="text-sm text-gray-300 mb-1 whitespace-pre-line">${shortDescription}</div>
+            ${description.length > 180 ? `<button id="${readMoreId}" class="text-purple-400 underline text-sm mb-2">Read more</button>` : ""}
             <p><span class="text-gray-400">Category:</span> ${category}</p>
             <p><span class="text-gray-400">Skill:</span> ${skill}</p>
             <p><span class="text-gray-400">Author:</span> ${author}</p>
           </div>
-          <a href="${download}" target="_blank" class="inline-block mt-4 px-4 py-2 bg-purple-700 hover:bg-purple-800 text-white rounded">Download</a>
+          <a href="${download}" target="_blank" class="inline-block mt-4 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded transform transition-transform duration-300 hover:scale-105">Download</a>
         `;
 
         container.appendChild(card);
+
+        if (description.length > 180) {
+          document.getElementById(readMoreId).addEventListener("click", () => {
+            const descElem = document.getElementById(descriptionId);
+            descElem.textContent = description;
+            descElem.classList.add("whitespace-pre-line");
+            document.getElementById(readMoreId).remove();
+          });
+        }
       });
     }
 
