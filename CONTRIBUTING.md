@@ -22,6 +22,11 @@ We strongly recommend using the official [Upload Tool](./Upload%20Tool/) to subm
 - A clear and concise title and description of the project
 - A folder structure that matches the repository's organization
 - A preview image of your project named preview.jpg
+- The files needed for the project. Cache any required files into the project file
+
+### DO NOT:
+- Upload simulation caches. Provide the nodes for them to be cooked by the user
+- Provide any files that you do not own or do not have the rights to distribute
 
 ### You Must:
 - Own the rights to any files you submit
