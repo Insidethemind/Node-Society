@@ -23,34 +23,30 @@ Clear explanations of node networks, parameters, and workflows significantly inc
 
 The goal of every submission should be to help others learn Houdini more effectively. Thank you for contributing to the community.
 
-# Upload Tool Information
+## Upload Tool
 
 The Upload Tool is a standalone utility designed to streamline the process of submitting Houdini projects to the Node Society repository. It automatically generates the required metadata, ensures correct folder structure, and creates a pull request to the repository on your behalf.
 
----
+Using this tool helps maintain consistency across submissions and significantly reduces the chances of formatting errors. While not mandatory, it is strongly recommended for all contributors.
 
-## Windows SmartScreen Warning
+## SmartScreen Warning on Windows
 
-When downloading or running the Upload Tool executable, you may encounter a **Windows SmartScreen** warning that marks the file as potentially unsafe.
+When downloading or running the Upload Tool executable, you may encounter a Windows SmartScreen warning that marks the file as potentially unsafe. This is expected behavior for new applications that haven’t yet been reviewed by Microsoft’s reputation systems.
 
-This is a common issue for newly created applications that are not yet recognized by Microsoft's reputation-based system.
+To proceed:
 
-### How to Proceed:
-1. When the warning appears, click **"More info"**.
+1. Click **"More info"** when the warning appears.
 2. Click **"Keep"** on the prompt.
-3. The tool will then download normally.
+3. Run the tool as normal.
 
-This does **not** mean the file is harmful—only that it is not yet widely downloaded or verified by Microsoft's systems.
+This does not mean the file is unsafe—only that it is not yet commonly downloaded.
 
----
+## Source Code Transparency
 
-## Transparency and Source Code
+The full Python source code for the Upload Tool is available in the [Upload Tool](./Upload%20Tool/) folder. You are welcome to inspect, audit, or run the script manually if you prefer not to use the compiled version.
 
-For transparency, the **full source code** for the Upload Tool is available inside the [`Upload Tool`](./Upload%20Tool/) folder. You are encouraged to review or run the script directly using Python if you prefer not to use the compiled executable.
+This transparency ensures that the tool remains trustworthy and adaptable for contributors who wish to see exactly how their data is handled.
 
----
-
-If you encounter any issues with the tool or have suggestions for improvement, feel free to open an issue in the repository.
 
 ## Usage
 
