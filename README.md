@@ -23,6 +23,35 @@ Clear explanations of node networks, parameters, and workflows significantly inc
 
 The goal of every submission should be to help others learn Houdini more effectively. Thank you for contributing to the community.
 
+# Upload Tool Information
+
+The Upload Tool is a standalone utility designed to streamline the process of submitting Houdini projects to the Node Society repository. It automatically generates the required metadata, ensures correct folder structure, and creates a pull request to the repository on your behalf.
+
+---
+
+## Windows SmartScreen Warning
+
+When downloading or running the Upload Tool executable, you may encounter a **Windows SmartScreen** warning that marks the file as potentially unsafe.
+
+This is a common issue for newly created applications that are not yet recognized by Microsoft's reputation-based system.
+
+### How to Proceed:
+1. When the warning appears, click **"More info"**.
+2. Click **"Keep"** on the prompt.
+3. The tool will then download normally.
+
+This does **not** mean the file is harmful—only that it is not yet widely downloaded or verified by Microsoft's systems.
+
+---
+
+## Transparency and Source Code
+
+For transparency, the **full source code** for the Upload Tool is available inside the [`Upload Tool`](./Upload%20Tool/) folder. You are encouraged to review or run the script directly using Python if you prefer not to use the compiled executable.
+
+---
+
+If you encounter any issues with the tool or have suggestions for improvement, feel free to open an issue in the repository.
+
 ## Usage
 
 The files shared within this community are intended solely for educational purposes. If you're contributing, please keep in mind that the goal is to support others in learning and developing their Houdini skills.
