@@ -17,7 +17,7 @@ class FormBackgroundWidget(QtWidgets.QWidget):
         painter.fillRect(svg_background, QtGui.QColor("#0B0E12"))
 
         if self.svg_renderer.isValid():
-            overlay_width = 600  
+            overlay_width = 600 
             available_width = self.width() - overlay_width
             available_height = self.height()
 
@@ -25,6 +25,7 @@ class FormBackgroundWidget(QtWidgets.QWidget):
 
             svg_left = (available_width - max_svg_size) / 2
             svg_top = (available_height - max_svg_size) / 2
+
 
             self.svg_renderer.render(
                 painter,
@@ -59,6 +60,24 @@ class FormBackgroundWidget(QtWidgets.QWidget):
         painter.drawImage(int(shadow_rect.x()) - blur_radius,
                           int(shadow_rect.y()) - blur_radius, blurred)
         painter.fillRect(form_rect, QtGui.QColor("#1a1a1a"))
+        
+
+        version_text = "v1.0.0"
+        font = QtGui.QFont("Segoe UI", 9)
+        painter.setFont(font)
+        painter.setPen(QtGui.QColor("#888"))
+
+
+        text_rect = painter.boundingRect(QtCore.QRectF(), version_text)
+        x = 10  
+        y = self.height() - 10  
+
+
+        y -= text_rect.height()
+
+
+        painter.drawText(QtCore.QPointF(x, y + text_rect.height()), version_text)
+
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -101,6 +120,7 @@ class UploadWindow(QtWidgets.QWidget):
         self.setWindowIcon(QtGui.QIcon("NodeSocietyIcon.ico"))
         self.setMinimumSize(1200, 900)   
         self.resize(1200, 900) 
+
         base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
         icon_path = os.path.join(base_path, "NodeSocietyIcon.ico")
         self.setWindowIcon(QtGui.QIcon(icon_path))
@@ -146,8 +166,9 @@ class UploadWindow(QtWidgets.QWidget):
 
         button_layout = QtWidgets.QVBoxLayout()
         button_layout.setContentsMargins(0, 0, 0, 20)
-        button_layout.addStretch()             
-        button_layout.addLayout(button_row)      
+        button_layout.addStretch()              
+        button_layout.addLayout(button_row)     
+
 
 
 
@@ -179,14 +200,19 @@ class UploadWindow(QtWidgets.QWidget):
             return field
 
         self.folder_path = add_field("Project Folder*")
+
         browse_button = QtWidgets.QPushButton("Browse")
-        browse_button.setFixedWidth(100)
+        browse_button.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        browse_button.adjustSize()
         browse_button.clicked.connect(self.browse_folder)
+
         browse_layout = QtWidgets.QHBoxLayout()
         browse_layout.addStretch()
         browse_layout.addWidget(browse_button)
         browse_layout.addStretch()
+
         form_layout.addLayout(browse_layout)
+
 
         self.project_title = add_field("Project Title*")
         self.description = add_field("Description*", is_multiline=True)
@@ -203,7 +229,7 @@ class UploadWindow(QtWidgets.QWidget):
         version_layout = QtWidgets.QHBoxLayout()
 
         self.houdini_version_combo = QtWidgets.QComboBox()
-        versions = [f"{v:.1f}" for v in [x * 0.5 for x in range(38, 43)]]  # 19.0 to 21.0
+        versions = [f"{v:.1f}" for v in [x * 0.5 for x in range(38, 43)]] 
         self.houdini_version_combo.addItems(versions)
         self.houdini_version_combo.setStyleSheet("background-color: #2e2e2e; color: white; border: none; padding: 6px;")
         version_layout.addWidget(self.houdini_version_combo)
@@ -216,10 +242,13 @@ class UploadWindow(QtWidgets.QWidget):
         form_layout.addLayout(version_layout)
 
 
+
+
         tag_label = QtWidgets.QLabel("Select Tags")
         tag_label.setAlignment(QtCore.Qt.AlignCenter)  
         tag_label.setStyleSheet("color: white; margin-top: 10px;")
         form_layout.addWidget(tag_label)
+
 
         self.tags_display = QtWidgets.QLabel("Selected: None")
         self.tags_display.setWordWrap(True)
@@ -238,9 +267,16 @@ class UploadWindow(QtWidgets.QWidget):
 
         
         self.select_tags_btn = QtWidgets.QPushButton("Select Tags")
-        self.select_tags_btn.setFixedWidth(125)  
-        self.select_tags_btn.setStyleSheet("margin-top: 5px;")  
+        self.select_tags_btn.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.select_tags_btn.adjustSize()
+        self.select_tags_btn.setStyleSheet("""
+            margin-top: 5px;
+            padding-left: 25px;
+            padding-right: 25px;
+        """)
         self.select_tags_btn.clicked.connect(self.open_tag_dialog)
+
+
 
         tag_button_layout = QtWidgets.QHBoxLayout()
         tag_button_layout.addStretch()
@@ -251,14 +287,19 @@ class UploadWindow(QtWidgets.QWidget):
 
         self.github_token = add_field("GitHub Token*", is_password=True)
 
+
         self.clear_token_btn = QtWidgets.QPushButton("Clear Saved Token")
-        self.clear_token_btn.setFixedWidth(150)
+        self.clear_token_btn.setSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self.clear_token_btn.adjustSize()
+        self.clear_token_btn.setStyleSheet("padding-left: 25px; padding-right: 25px;")
+
 
         clear_token_layout = QtWidgets.QHBoxLayout()
         clear_token_layout.addStretch()
         clear_token_layout.addWidget(self.clear_token_btn)
         clear_token_layout.addStretch()
         form_layout.addLayout(clear_token_layout)
+
 
         settings = QtCore.QSettings("NodeSociety", "UploadTool")
         saved_token = settings.value("github_token", "")
@@ -267,12 +308,12 @@ class UploadWindow(QtWidgets.QWidget):
         self.clear_token_btn.clicked.connect(lambda: [self.github_token.clear(), settings.remove("github_token")])
 
 
-
         self.type_combo = self.create_dropdown("Type*", ["Project Files", "Simulations", "HDAs", "Python Scripts", "Vex Snippets"], form_layout)
         self.skill_combo = self.create_dropdown("Skill Level*", ["Beginner", "Intermediate", "Advanced"], form_layout)
         self.category_combo = self.create_dropdown("Category*", ["SOPs", "DOPs", "CHOPs", "COPs", "TOPs", "Procedural Modeling", "VEX", "VOPs","Solaris or USD", "Materials", "Rendering", "Lighting"], form_layout)
         self.sim_type_combo = self.create_dropdown("Simulation Type*", ["Flip", "POPs", "Vellum", "RBD", "Pyro", "MPM", "FEM", "Other"], form_layout)
         self.sim_type_combo.parent().setVisible(False)
+
 
         self.type_combo.currentTextChanged.connect(self.toggle_optional_fields)
         self.toggle_optional_fields(self.type_combo.currentText())
@@ -458,6 +499,7 @@ Simulation Type: {sim_type}
                     show_message(self, "Timeout", "Fork did not become available in time.", QtWidgets.QMessageBox.Critical)
                     return
 
+
             try:
                 upstream_branch = upstream_repo.get_branch("main")
                 fork.get_git_ref("heads/main").edit(upstream_branch.commit.sha, force=True)
@@ -546,45 +588,32 @@ Simulation Type: {sim_type}
                     try:
                         with open(file_path, "r", encoding="utf-8") as f:
                             content = f.read()
-                        is_binary = False
+                        encoding = "text"
                     except UnicodeDecodeError:
                         with open(file_path, "rb") as f:
-                            content = base64.b64encode(f.read()).decode("utf-8")
-                        is_binary = True
+                            content = f.read()
+                        encoding = "binary"
 
                     try:
                         existing = fork.get_contents(path)
                         sha = existing.sha
-                        if is_binary:
-                            fork.update_file(
-                                path=path,
-                                message=f"Update {file}",
-                                content=content,
-                                sha=sha
-                            )
-                        else:
-                            fork.update_file(
-                                path=path,
-                                message=f"Update {file}",
-                                content=content,
-                                sha=sha
-                            )
+                        fork.update_file(
+                            path=path,
+                            message=f"Update {file}",
+                            content=content,
+                            sha=sha
+                        )
                     except GithubException as ge:
                         if ge.status == 404:
-                            if is_binary:
-                                fork.create_file(
-                                    path=path,
-                                    message=f"Add {file}",
-                                    content=content
-                                )
-                            else:
-                                fork.create_file(
-                                    path=path,
-                                    message=f"Add {file}",
-                                    content=content
-                                )
+                            fork.create_file(
+                                path=path,
+                                message=f"Add {file}",
+                                content=content
+                            )
                         else:
                             raise
+
+
 
             pr = upstream_repo.create_pull(
                 title=f"New Submission: {self.project_title.text()}",
@@ -592,6 +621,7 @@ Simulation Type: {sim_type}
                 head=f"{username}:main",
                 base="main"
             )
+
 
             show_message(
                 self,
@@ -659,7 +689,7 @@ class TagSelectionDialog(QtWidgets.QDialog):
                 """)
                 btn.clicked.connect(self.toggle_tag)
                 self.tag_buttons[tag] = btn
-                row = i // 4  # 4 columns
+                row = i // 4  
                 col = i % 4
                 group_layout.addWidget(btn, row, col)
 
