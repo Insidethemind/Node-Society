@@ -4,7 +4,6 @@ from urllib.parse import quote
 
 output = []
 
-# Expected metadata fields
 fields = [
     "Title",
     "Description",
@@ -17,25 +16,46 @@ fields = [
     "Simulation Type"
 ]
 
-# Traverse all metadata.txt files
+known_keys = set(fields)
+
+def parse_metadata_file(filepath):
+    metadata = {}
+    current_key = None
+    current_value = []
+
+    with open(filepath, 'r', encoding='utf-8') as f:
+        for line in f:
+            line = line.rstrip('\n')
+
+            if ':' in line:
+                possible_key, possible_value = line.split(':', 1)
+                if possible_key.strip() in known_keys:
+                    if current_key:
+                        metadata[current_key] = ' '.join(current_value).replace('\r', '').strip()
+                    current_key = possible_key.strip()
+                    current_value = [possible_value.strip()]
+                else:
+                    if current_key:
+                        current_value.append(line.strip())
+            else:
+                if current_key:
+                    current_value.append(line.strip())
+
+        if current_key:
+            metadata[current_key] = ' '.join(current_value).replace('\r', '').strip()
+
+    return metadata
+
+
 for root, _, files in os.walk("."):
     for file in files:
         if file == "metadata.txt":
             metadata_path = os.path.join(root, file)
             entry = {field: "" for field in fields}
 
-            with open(metadata_path, "r", encoding="utf-8") as f:
-                for line in f:
-                    if ':' in line:
-                        key, value = line.split(':', 1)
-                        key = key.strip()
-                        value = value.strip()
-                        if key in entry:
-                            if key == "Description":
-                                entry[key] = value.replace('\n', ' ').replace('\r', ' ').strip()
-                            else:
-                                entry[key] = value
-
+            parsed = parse_metadata_file(metadata_path)
+            for key in entry:
+                entry[key] = parsed.get(key, "")
 
             type_ = entry["Type"].strip()
             title = entry["Title"].strip()
@@ -52,12 +72,10 @@ for root, _, files in os.walk("."):
                 type_slug = quote(type_)
                 path = f"{type_slug}/{title_slug}"
 
-            # Create full GitHub folder URL
             entry["Download"] = f"https://github.com/Insidethemind/Node-Society/tree/main/{path}"
 
             output.append(entry)
 
-# Write combined JSON file to /docs
 os.makedirs("docs", exist_ok=True)
 with open("docs/all_metadata_combined.json", "w", encoding="utf-8") as out_file:
     json.dump(output, out_file, indent=2)
