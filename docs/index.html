@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
         <title>Node Society Metadata Explorer</title>         
         <link rel="icon" type="image/svg-xml" href="NodeSociety.svg"/> 
-        <link href="./dist/output.css" rel="stylesheet">     
+        <link href="./dist/output.css" rel="stylesheet"> 
     </head>     
     <body class="bg-neutral-950 text-gray-100 p-8"> 
         <nav class="sticky top-0 z-50 w-full py-3 bg-neutral-950"> 
@@ -70,54 +70,55 @@
     }
 
     function renderCards(data) {
-      const container = document.getElementById("cardsContainer");
-      container.innerHTML = "";
+        const container = document.getElementById("cardsContainer");
+        container.innerHTML = "";
 
-      data.forEach((item, index) => {
-        const title = item["Title"] || "Untitled";
-        const category = item["Category"] || "-";
-        const skill = item["Skill Level"] || "-";
-        const author = item["Author"] || "-";
-        const download = item["Download"] || "#";
-        const imageUrl = derivePreviewImageUrl(download);
-        const description = item["Description"] || "";
-        const shortDescription = description.length > 180 ? description.slice(0, 180).trim() + "..." : description;
+        data.forEach((item, index) => {
+            const title = item["Title"] || "Untitled";
+            const category = item["Category"] || "-";
+            const skill = item["Skill Level"] || "-";
+            const author = item["Author"] || "-";
+            const download = item["Download"] || "#";
+            const imageUrl = derivePreviewImageUrl(download);
+            const description = item["Description"] || "";
+            const shortDescription = description.length > 180 ? description.slice(0, 180).trim() + "..." : description;
 
-        const card = document.createElement("div");
-        card.className = "bg-neutral-900 p-4 rounded w-full max-w-[400px] min-h-[400px] flex flex-col transform transition-transform duration-300 hover:scale-105 overflow-hidden";
+            const card = document.createElement("div");
+            card.className = "bg-neutral-900 p-4 rounded w-full max-w-[400px] min-h-[400px] flex flex-col transform transition-transform duration-300 hover:scale-105 overflow-hidden";
 
-        const imageTag = `<div class='w-full h-40 mb-4 rounded bg-neutral-800 flex items-center justify-center'>
-          ${imageUrl ? `<img src="${imageUrl}" alt="${title}" class="w-full h-full object-cover rounded" onerror="this.style.display='none'"/>` : `<span class='text-sm text-gray-400'>No preview</span>`}
-        </div>`;
+            const imageTag = `<div class='w-full h-40 mb-4 rounded bg-neutral-800 flex items-center justify-center'>
+            ${imageUrl ? `<img src="${imageUrl}" alt="${title}" class="w-full h-full object-cover rounded" onerror="this.style.display='none'"/>` : `<span class='text-sm text-gray-400'>No preview</span>`}
+            </div>`;
 
-        const descriptionId = `desc-${index}`;
-        const readMoreId = `read-more-${index}`;
+            const descriptionId = `desc-${index}`;
+            const readMoreId = `read-more-${index}`;
 
-        card.innerHTML = `
-          ${imageTag}
-          <div class="flex-1 overflow-auto">
-            <h2 class="text-xl font-semibold mb-2">${title}</h2>
-            <div id="${descriptionId}" class="text-sm text-gray-300 mb-1 whitespace-pre-line">${shortDescription}</div>
-            ${description.length > 180 ? `<button id="${readMoreId}" class="text-purple-400 underline text-sm mb-2">Read more</button>` : ""}
-            <p><span class="text-gray-400">Category:</span> ${category}</p>
-            <p><span class="text-gray-400">Skill:</span> ${skill}</p>
-            <p><span class="text-gray-400">Author:</span> ${author}</p>
-          </div>
-          <a href="${download}" target="_blank" class="inline-block mt-4 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded transform transition-transform duration-300 hover:scale-105">Download</a>
-        `;
+            card.innerHTML = `
+            ${imageTag}
+            <div class="flex-1 flex flex-col overflow-hidden">
+                <h2 class="text-xl font-semibold mb-2">${title}</h2>
+                <div id="${descriptionId}" class="text-sm text-gray-300 mb-1 line-clamp-4 overflow-hidden">${shortDescription}</div>
+                ${description.length > 180 ? `<button id="${readMoreId}" class="text-purple-400 underline text-sm mb-2 self-start">Read more</button>` : ""}
+                <p><span class="text-gray-400">Category:</span> ${category}</p>
+                <p><span class="text-gray-400">Skill:</span> ${skill}</p>
+                <p><span class="text-gray-400">Author:</span> ${author}</p>
+            </div>
+            <a href="${download}" target="_blank" class="inline-block mt-4 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white font-semibold rounded transform transition-transform duration-300 hover:scale-105">Download</a>
+            `;
 
-        container.appendChild(card);
+            container.appendChild(card);
 
-        if (description.length > 180) {
-          document.getElementById(readMoreId).addEventListener("click", () => {
-            const descElem = document.getElementById(descriptionId);
-            descElem.textContent = description;
-            descElem.classList.add("whitespace-pre-line");
-            document.getElementById(readMoreId).remove();
-          });
-        }
-      });
+            if (description.length > 180) {
+            document.getElementById(readMoreId).addEventListener("click", () => {
+                const descElem = document.getElementById(descriptionId);
+                descElem.textContent = description;
+                descElem.classList.remove("line-clamp-4");
+                document.getElementById(readMoreId).remove();
+            });
+            }
+        });
     }
+
 
     function applyFilters() {
       const search = document.getElementById("searchInput").value.toLowerCase();
