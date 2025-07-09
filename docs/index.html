@@ -83,22 +83,26 @@
             const description = item["Description"] || "";
             const shortDescription = description.length > 180 ? description.slice(0, 180).trim() + "..." : description;
 
-            const card = document.createElement("div");
-            card.className = "bg-neutral-900 p-4 rounded w-full max-w-[400px] min-h-[400px] flex flex-col transform transition-transform duration-300 hover:scale-105 overflow-hidden";
-
-            const imageTag = `<div class='w-full h-40 mb-4 rounded bg-neutral-800 flex items-center justify-center'>
-            ${imageUrl ? `<img src="${imageUrl}" alt="${title}" class="w-full h-full object-cover rounded" onerror="this.style.display='none'"/>` : `<span class='text-sm text-gray-400'>No preview</span>`}
-            </div>`;
-
             const descriptionId = `desc-${index}`;
-            const readMoreId = `read-more-${index}`;
+            const toggleId = `toggle-${index}`;
+
+            const card = document.createElement("div");
+            card.className = "bg-neutral-900 p-4 rounded w-full max-w-[400px] min-h-[400px] flex flex-col transform transition-transform duration-300 hover:scale-105";
+
+            const imageTag = `
+            <div class='w-full h-40 mb-4 rounded bg-neutral-800 flex items-center justify-center'>
+                ${imageUrl ? `<img src="${imageUrl}" alt="${title}" class="w-full h-full object-cover rounded" onerror="this.style.display='none'"/>` : `<span class='text-sm text-gray-400'>No preview</span>`}
+            </div>`;
 
             card.innerHTML = `
             ${imageTag}
-            <div class="flex-1 flex flex-col overflow-hidden">
+            <div class="flex-1 flex flex-col">
                 <h2 class="text-xl font-semibold mb-2">${title}</h2>
-                <div id="${descriptionId}" class="text-sm text-gray-300 mb-1 line-clamp-4 overflow-hidden">${shortDescription}</div>
-                ${description.length > 180 ? `<button id="${readMoreId}" class="text-purple-400 underline text-sm mb-2 self-start">Read more</button>` : ""}
+                <div id="${descriptionId}" class="text-sm text-gray-300 mb-2 whitespace-pre-line">${shortDescription}</div>
+                ${description.length > 180 ? `
+                <div class="text-center">
+                    <button id="${toggleId}" class="text-purple-400 underline text-sm mb-2">Read more</button>
+                </div>` : ""}
                 <p><span class="text-gray-400">Category:</span> ${category}</p>
                 <p><span class="text-gray-400">Skill:</span> ${skill}</p>
                 <p><span class="text-gray-400">Author:</span> ${author}</p>
@@ -109,11 +113,19 @@
             container.appendChild(card);
 
             if (description.length > 180) {
-            document.getElementById(readMoreId).addEventListener("click", () => {
-                const descElem = document.getElementById(descriptionId);
-                descElem.textContent = description;
-                descElem.classList.remove("line-clamp-4");
-                document.getElementById(readMoreId).remove();
+            const btn = document.getElementById(toggleId);
+            const descElem = document.getElementById(descriptionId);
+            let expanded = false;
+
+            btn.addEventListener("click", () => {
+                expanded = !expanded;
+                if (expanded) {
+                descElem.innerHTML = description.replace(/\n/g, "<br>");
+                btn.textContent = "Read less";
+                } else {
+                descElem.innerHTML = shortDescription;
+                btn.textContent = "Read more";
+                }
             });
             }
         });
