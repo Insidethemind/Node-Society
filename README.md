@@ -50,6 +50,20 @@ The full Python source code for the Upload Tool is available in the [Upload Tool
 
 This transparency ensures that the tool remains trustworthy and adaptable for contributors who wish to see exactly how their data is handled.
 
+## Creating a Github Token
+The Upload Tool requires a github token from your account with public repo access in order to submit files on your behalf. You can generate a token by going to [github.com/settings/tokens](https://github.com/settings/tokens).
+
+To generate a token click on Generate bew token and select the Generate new token (classic) from the drop down.
+
+Give your token a name and set an expiration date.
+
+**Important** Under the Scopes select public_repo. Without this the tool will not be able to submit. Your access should look like this:
+
+![repo_access](https://github.com/user-attachments/assets/193c8b0d-948f-4d97-8beb-568f107248f8)
+
+Click generate token at the bottom of the page.
+
+Copy the token and paste it into the Upload Tool. Github will not show you this token again so save it somewhere if you don't want to generate another in case you accidentally delete it. The Upload Tool will store your token until you clear it once you submit the first time.
 
 ## Usage
 
