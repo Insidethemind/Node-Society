@@ -31,7 +31,11 @@ for root, _, files in os.walk("."):
                         key = key.strip()
                         value = value.strip()
                         if key in entry:
-                            entry[key] = value
+                            if key == "Description":
+                                entry[key] = value.replace('\n', ' ').replace('\r', ' ').strip()
+                            else:
+                                entry[key] = value
+
 
             type_ = entry["Type"].strip()
             title = entry["Title"].strip()
