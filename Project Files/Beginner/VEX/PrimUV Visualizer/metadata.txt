@@ -1,0 +1,9 @@
+Title: PrimUV Visualizer
+Description: Learn how the PrimUV function works in VEX by exploring a visual representation of what is happening behind the scenes.
+Houdini Version: 20.5.550
+Tags: SOPs, VEX, Beginner
+Author: Insidethemind
+Type: Project Files
+Skill Level: Beginner
+Category: VEX
+Simulation Type:
