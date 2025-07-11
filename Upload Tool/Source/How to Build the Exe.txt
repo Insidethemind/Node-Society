@@ -1,0 +1,3 @@
+To build the .exe file yourself, download the folder with the python script, svg logo and ico file. Open a terminal in that folder and run the following command. You will need python installed for this to work.
+
+pyinstaller --noconsole --onefile --icon=NodeSocietyIcon.ico --add-data "NodeSociety.svg;." --add-data "NodeSocietyIcon.ico;." NodeSociety.py
