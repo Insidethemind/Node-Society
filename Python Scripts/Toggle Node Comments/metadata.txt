@@ -1,0 +1,9 @@
+Title: Toggle Node Comments
+Description: A python script to toggle all node comments for an entire project.
+Houdini Version: 20.5.550
+Tags: Beginner, Python
+Author: Insidethemind
+Type: Python Scripts
+Skill Level: 
+Category: 
+Simulation Type:
