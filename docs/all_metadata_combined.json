@@ -22,5 +22,17 @@
     "Category": "TOPs",
     "Simulation Type": "",
     "Download": "https://github.com/Insidethemind/Node-Society/tree/main/Project Files/Intermediate/TOPs/River%20Rocks%20-%20PDG%20USD%20Variant%20Creation"
+  },
+  {
+    "Title": "Toggle Node Comments",
+    "Description": "A python script to toggle all node comments for an entire project.",
+    "Houdini Version": "20.5.550",
+    "Tags": "Beginner, Python",
+    "Author": "Insidethemind",
+    "Type": "Python Scripts",
+    "Skill Level": "",
+    "Category": "",
+    "Simulation Type": "",
+    "Download": "https://github.com/Insidethemind/Node-Society/tree/main/Python%20Scripts/Toggle%20Node%20Comments"
   }
 ]
