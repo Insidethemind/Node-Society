@@ -17,12 +17,13 @@ jobs:
       - name: Checkout Repository with Push Access
         uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GH_PAT }}  
+          token: ${{ secrets.GH_PAT }}
 
       - name: Run Python Script to Combine Metadata
         run: python .github/scripts/collect_metadata.py
 
       - name: Commit and Push Combined Metadata JSON
+        shell: pwsh
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
@@ -42,7 +43,7 @@ jobs:
     if: ${{ github.event.inputs.deploy == 'true' }}
 
     steps:
-      - name: Checkout Repository with Push Access
+      - name: Checkout Repository
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_PAT }}
