@@ -6,7 +6,7 @@ Our goal is to bring artists together to share knowledge, tips, and resources th
 By contributing and learning together, we aim to lower the barrier to entry and create a space where everyone can thrive. We truly believe that everyone deserves the opportunity to bring their imaginations to life and in doing so it will push everyone to improve further. 
 
 ## Finding Projects
-The best way to find projects that you are looking for is by using the search functionality built into [node-society.com.](https://node-society.com/) The website pulls all of the submissions from the github repository and allows users to search through all of the metadata and filter to exactly what they are looking for.
+The best way to find projects that you are looking for is by using the search functionality built into [node-society.com.](https://www.node-society.com/) The website pulls all of the submissions from the github repository and allows users to search through all of the metadata and filter to exactly what they are looking for.
 
 ## Who Can Contribute
 
