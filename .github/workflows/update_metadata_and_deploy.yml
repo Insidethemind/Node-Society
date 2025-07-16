@@ -1,0 +1,69 @@
+name: Manual Metadata Update and Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      deploy:
+        description: 'Also deploy site after metadata update?'
+        required: false
+        default: 'false'
+
+jobs:
+  combine:
+    name: Combine Metadata
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Repository with Push Access
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}  
+
+      - name: Run Python Script to Combine Metadata
+        run: python .github/scripts/collect_metadata.py
+
+      - name: Commit and Push Combined Metadata JSON
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+          git add docs/all_metadata_combined.json
+
+          $status = git status --porcelain
+          if ($status) {
+            git commit -m "Update combined metadata JSON"
+            git push origin HEAD:main
+          } else {
+            Write-Output "No changes to commit"
+
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: self-hosted
+    needs: combine
+    if: ${{ github.event.inputs.deploy == 'true' }}
+
+    steps:
+      - name: Checkout Repository with Push Access
+        uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
+
+      - name: Set up Git
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+
+      - name: Copy docs to public
+        run: |
+          rm -rf public
+          mkdir public
+          cp -r docs/* public/
+
+      - name: Push to gh-pages
+        run: |
+          cd public
+          git init
+          git checkout -b gh-pages
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git add .
+          git commit -m "Manual deploy to GitHub Pages"
+          git push --force origin gh-pages
