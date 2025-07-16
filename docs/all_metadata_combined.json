@@ -1,7 +1,7 @@
 [
   {
     "Title": "Copernicus Quick Texture Exporter",
-    "Description": "Copernicus HDA for quick exporting textures.  PBR Exporter. One-Click Export: Export multiple texture maps instantly from Copernicus.  Choose your export path.  Multiple Formats: Support for PNG, TIFF, EXR, and JPG exports.  Resolution Control: Export at custom resolutions.",
+    "Description": "Copernicus HDA for quick exporting textures. PBR Exporter. One-Click Export: Export multiple texture maps instantly from Copernicus.  Choose your export path.  Multiple Formats: Support for PNG, TIFF, EXR, and JPG exports.  Resolution Control: Export at custom resolutions.",
     "Houdini Version": "20.5.20.5+",
     "Tags": "Beginner, HDA, COPs, Materials",
     "Author": "marquitoscra",
