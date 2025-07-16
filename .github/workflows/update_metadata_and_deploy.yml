@@ -53,10 +53,12 @@ jobs:
           git config --global user.email "github-actions@github.com"
 
       - name: Copy docs to public
+        shell: powershell
         run: |
-          rm -rf public
-          mkdir public
-          cp -r docs/* public/
+          if (Test-Path public) { Remove-Item public -Recurse -Force }
+          New-Item -ItemType Directory -Path public
+          Copy-Item -Recurse -Force docs\* public\
+
 
       - name: Push to gh-pages
         run: |
