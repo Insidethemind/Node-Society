@@ -27,7 +27,7 @@ All submissions must include the following:
 - A `metadata.json` file in the correct format  
   *(automatically created if you use the Upload Tool)*
 - A clear and concise title and description
-- A `preview.jpg` image that represents your project
+- A `preview.jpg` image that represents your project (Safe area is 368x160)
 - All project files needed to understand or reproduce the result  
   *(Do not include external caches. Provide the nodes to cache them instead.)*
   *(Stash any other required assets into the project file if necessary)*
