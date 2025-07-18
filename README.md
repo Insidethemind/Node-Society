@@ -5,6 +5,8 @@ Our goal is to bring artists together to share knowledge, tips, and resources th
 
 By contributing and learning together, we aim to lower the barrier to entry and create a space where everyone can thrive. We truly believe that everyone deserves the opportunity to bring their imaginations to life and in doing so it will push everyone to improve further. 
 
+For now please join the [Inside the Mind discord](https://discord.gg/vssZxjN) and navigate to the Node Society category for any discussion or questions related to the project.
+
 ## Finding Projects
 The best way to find projects that you are looking for is by using the search functionality built into [node-society.com.](https://www.node-society.com/) The website pulls all of the submissions from the github repository and allows users to search through all of the metadata and filter to exactly what they are looking for.
 
