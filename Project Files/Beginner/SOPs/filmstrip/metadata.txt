@@ -1,0 +1,9 @@
+Title: filmstrip
+Description: Make a filmstrip in SOPs
+Houdini Version: 20.5
+Tags: Beginner, LOPs, SOPs
+Author: maitlandvt
+Type: Project Files
+Skill Level: Beginner
+Category: SOPs
+Simulation Type:
