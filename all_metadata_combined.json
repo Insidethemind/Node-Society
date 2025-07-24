@@ -1,0 +1,74 @@
+[
+  {
+    "Title": "Copernicus Quick Texture Exporter",
+    "Description": "Copernicus HDA for quick exporting textures. PBR Exporter.  One-Click Export: Export multiple texture maps instantly from Copernicus.  Choose your export path.  Multiple Formats: Support for PNG, TIFF, EXR, and JPG exports.  Resolution Control: Export at custom resolutions.",
+    "Houdini Version": "20.5.20.5+",
+    "Tags": "Beginner, HDA, COPs, Materials",
+    "Author": "marquitoscra",
+    "Type": "HDAs",
+    "Skill Level": "",
+    "Category": "",
+    "Simulation Type": "",
+    "Download": "https://github.com/Insidethemind/Node-Society/tree/main/HDAs/Copernicus%20Quick%20Texture%20Exporter"
+  },
+  {
+    "Title": "filmstrip",
+    "Description": "Make a filmstrip in SOPs",
+    "Houdini Version": "20.5",
+    "Tags": "Beginner, LOPs, SOPs",
+    "Author": "maitlandvt",
+    "Type": "Project Files",
+    "Skill Level": "Beginner",
+    "Category": "SOPs",
+    "Simulation Type": "",
+    "Download": "https://github.com/Insidethemind/Node-Society/tree/main/Project Files/Beginner/SOPs/filmstrip"
+  },
+  {
+    "Title": "The Wineglass Trick",
+    "Description": "Make a wineglass with just a couple of nodes",
+    "Houdini Version": "20.5",
+    "Tags": "Beginner, LOPs, Procedural Modeling, SOPs",
+    "Author": "maitlandvt",
+    "Type": "Project Files",
+    "Skill Level": "Beginner",
+    "Category": "SOPs",
+    "Simulation Type": "",
+    "Download": "https://github.com/Insidethemind/Node-Society/tree/main/Project Files/Beginner/SOPs/The%20Wineglass%20Trick"
+  },
+  {
+    "Title": "PrimUV Visualizer",
+    "Description": "Learn how the PrimUV function works in VEX by exploring a visual representation of what is happening behind the scenes.",
+    "Houdini Version": "20.5.550",
+    "Tags": "SOPs, VEX, Beginner",
+    "Author": "Insidethemind",
+    "Type": "Project Files",
+    "Skill Level": "Beginner",
+    "Category": "VEX",
+    "Simulation Type": "",
+    "Download": "https://github.com/Insidethemind/Node-Society/tree/main/Project Files/Beginner/VEX/PrimUV%20Visualizer"
+  },
+  {
+    "Title": "River Rocks - PDG USD Variant Creation",
+    "Description": "PDG/TOPs driven pipeline from asset creation to final render and comp. This file shows how to use pdg to generate assets, texture them, store them as USD variants, assemble in a solaris scene, and render and comp - all within a single dependency graph.  HDRI files used can be downloaded from Polyhaven.com:  https://polyhaven.com/a/brown_photostudio_06 https://polyhaven.com/a/sunset_in_the_chalk_quarry",
+    "Houdini Version": "20.5",
+    "Tags": "Solaris, TOPs, Karma, Intermediate, Procedural Modeling, USD",
+    "Author": "zkatara",
+    "Type": "Project Files",
+    "Skill Level": "Intermediate",
+    "Category": "TOPs",
+    "Simulation Type": "",
+    "Download": "https://github.com/Insidethemind/Node-Society/tree/main/Project Files/Intermediate/TOPs/River%20Rocks%20-%20PDG%20USD%20Variant%20Creation"
+  },
+  {
+    "Title": "Toggle Node Comments",
+    "Description": "A python script to toggle all node comments for an entire project.",
+    "Houdini Version": "20.5.550",
+    "Tags": "Beginner, Python",
+    "Author": "Insidethemind",
+    "Type": "Python Scripts",
+    "Skill Level": "",
+    "Category": "",
+    "Simulation Type": "",
+    "Download": "https://github.com/Insidethemind/Node-Society/tree/main/Python%20Scripts/Toggle%20Node%20Comments"
+  }
+]
