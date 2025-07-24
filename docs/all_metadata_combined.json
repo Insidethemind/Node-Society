@@ -1,7 +1,7 @@
 [
   {
     "Title": "Copernicus Quick Texture Exporter",
-    "Description": "Copernicus HDA for quick exporting textures.  PBR Exporter. One-Click Export: Export multiple texture maps instantly from Copernicus.  Choose your export path.  Multiple Formats: Support for PNG, TIFF, EXR, and JPG exports.  Resolution Control: Export at custom resolutions.",
+    "Description": "Copernicus HDA for quick exporting textures. PBR Exporter.  One-Click Export: Export multiple texture maps instantly from Copernicus.  Choose your export path.  Multiple Formats: Support for PNG, TIFF, EXR, and JPG exports.  Resolution Control: Export at custom resolutions.",
     "Houdini Version": "20.5.20.5+",
     "Tags": "Beginner, HDA, COPs, Materials",
     "Author": "marquitoscra",
@@ -10,6 +10,18 @@
     "Category": "",
     "Simulation Type": "",
     "Download": "https://github.com/Insidethemind/Node-Society/tree/main/HDAs/Copernicus%20Quick%20Texture%20Exporter"
+  },
+  {
+    "Title": "filmstrip",
+    "Description": "Make a filmstrip in SOPs",
+    "Houdini Version": "20.5",
+    "Tags": "Beginner, LOPs, SOPs",
+    "Author": "maitlandvt",
+    "Type": "Project Files",
+    "Skill Level": "Beginner",
+    "Category": "SOPs",
+    "Simulation Type": "",
+    "Download": "https://github.com/Insidethemind/Node-Society/tree/main/Project Files/Beginner/SOPs/filmstrip"
   },
   {
     "Title": "The Wineglass Trick",
