@@ -36,6 +36,18 @@
     "Download": "https://github.com/Insidethemind/Node-Society/tree/main/Project Files/Beginner/SOPs/The%20Wineglass%20Trick"
   },
   {
+    "Title": "Volume Mask",
+    "Description": "Learn how to mask volumes to influence where effects are applied to a volume.",
+    "Houdini Version": "20.5.550",
+    "Tags": "Beginner, VOPs, SOPs",
+    "Author": "Insidethemind",
+    "Type": "Project Files",
+    "Skill Level": "Beginner",
+    "Category": "SOPs",
+    "Simulation Type": "",
+    "Download": "https://github.com/Insidethemind/Node-Society/tree/main/Project Files/Beginner/SOPs/Volume%20Mask"
+  },
+  {
     "Title": "PrimUV Visualizer",
     "Description": "Learn how the PrimUV function works in VEX by exploring a visual representation of what is happening behind the scenes.",
     "Houdini Version": "20.5.550",
