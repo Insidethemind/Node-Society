@@ -1,0 +1,36 @@
+name: Manual Deploy Metadata to GitHub Pages
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GH_PAT }}
+          fetch-depth: 0
+
+      - name: Deploy all_metadata_combined.json to gh-pages
+        shell: powershell
+        run: |
+          # Create a temporary work directory
+          $tempDir = "temp_publish"
+          if (Test-Path $tempDir) { Remove-Item $tempDir -Recurse -Force }
+          New-Item -ItemType Directory -Path $tempDir | Out-Null
+
+          Copy-Item "docs\all_metadata_combined.json" "$tempDir\all_metadata_combined.json" -Force
+
+          Set-Location $tempDir
+          git init
+          git checkout -b gh-pages
+          git remote add origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
+          git add all_metadata_combined.json
+          git commit -m "Update all_metadata_combined.json for GitHub Pages"
+          git push --force origin gh-pages
