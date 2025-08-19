@@ -16,20 +16,16 @@ jobs:
         with:
           ref: gh-pages
           fetch-depth: 0
-          persist-credentials: false
-          token: ${{ github.token }}
+          persist-credentials: false  
+          token: ${{ github.token }}    
 
-      - name: Neutralize interactive credential helpers
-        shell: powershell
-        run: |
-          git config --global --unset-all credential.helper 2>$null
-          git config --system --unset-all credential.helper 2>$null
-
-      - name: Configure git user
+      - name: Configure git user (repo-local)
         shell: powershell
         run: |
           git config user.name  "github-actions"
           git config user.email "github-actions@github.com"
+          # Disable any helper only for this repo (no admin perms needed)
+          git config --local credential.helper ""
 
       - name: Update docs/all_metadata_combined.json from main
         shell: powershell
@@ -49,13 +45,13 @@ jobs:
             Write-Host "No changes to commit."
           }
 
-      - name: Push to gh-pages (explicit auth)
+      - name: Push to gh-pages (explicit auth, non-interactive)
         if: ${{ success() }}
         shell: powershell
         env:
-          GIT_AUTH_TOKEN: ${{ github.token }}   
+          GIT_AUTH_TOKEN: ${{ github.token }}  
+          GIT_TERMINAL_PROMPT: "0"
         run: |
-          # Set remote to include token so Git never prompts
           $origin = "https://x-access-token:$env:GIT_AUTH_TOKEN@github.com/${{ github.repository }}.git"
           git remote set-url origin $origin
 
