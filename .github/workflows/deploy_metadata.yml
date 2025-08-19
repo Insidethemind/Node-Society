@@ -7,30 +7,50 @@ permissions:
   contents: write
 
 jobs:
-  deploy:
+  publish:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout repo
+      - name: Checkout gh-pages
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GH_PAT }}   
+          ref: gh-pages
           fetch-depth: 0
 
-      - name: Deploy all_metadata_combined.json to gh-pages
+      - name: Neutralize interactive credential helpers
         shell: powershell
         run: |
-          # Create a temporary work directory
-          $tempDir = "temp_publish"
-          if (Test-Path $tempDir) { Remove-Item $tempDir -Recurse -Force }
-          New-Item -ItemType Directory -Path $tempDir | Out-Null
+          git config --global --unset-all credential.helper 2>$null
+          git config --system --unset-all credential.helper 2>$null
 
-          Copy-Item "docs\all_metadata_combined.json" "$tempDir\all_metadata_combined.json" -Force
+      - name: Configure git user
+        shell: powershell
+        run: |
+          git config user.name  "github-actions"
+          git config user.email "github-actions@github.com"
 
-          Set-Location $tempDir
-          git init
-          git checkout -b gh-pages
-          git remote add origin https://x-access-token:${{ secrets.GH_PAT }}@github.com/${{ github.repository }}.git
-          git add all_metadata_combined.json
-          git commit -m "Update all_metadata_combined.json for GitHub Pages"
-          git push --force origin gh-pages
+      - name: Update docs/all_metadata_combined.json from main
+        shell: powershell
+        run: |
+          # Make sure we can read from main
+          git fetch origin main
+
+          # Ensure target folder exists on gh-pages
+          if (-not (Test-Path "docs")) { New-Item -ItemType Directory -Path "docs" | Out-Null }
+
+          # Write the blob from main to the same path on gh-pages
+          git show origin/main:docs/all_metadata_combined.json > docs/all_metadata_combined.json
+
+      - name: Commit & push if changed
+        shell: powershell
+        run: |
+          git add docs/all_metadata_combined.json
+          $status = git status --porcelain
+          if ($status) {
+            git commit -m "Update docs/all_metadata_combined.json on gh-pages"
+            git push origin gh-pages
+            Write-Host "Changes committed and pushed."
+          } else {
+            Write-Host "No changes to commit."
+          }
