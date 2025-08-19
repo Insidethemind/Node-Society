@@ -14,9 +14,10 @@ jobs:
       - name: Checkout gh-pages
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.GH_PAT }}   
           ref: gh-pages
           fetch-depth: 0
+          persist-credentials: false
+          token: ${{ github.token }}
 
       - name: Neutralize interactive credential helpers
         shell: powershell
@@ -33,24 +34,35 @@ jobs:
       - name: Update docs/all_metadata_combined.json from main
         shell: powershell
         run: |
-          # Make sure we can read from main
           git fetch origin main
-
-          # Ensure target folder exists on gh-pages
           if (-not (Test-Path "docs")) { New-Item -ItemType Directory -Path "docs" | Out-Null }
-
-          # Write the blob from main to the same path on gh-pages
           git show origin/main:docs/all_metadata_combined.json > docs/all_metadata_combined.json
 
-      - name: Commit & push if changed
+      - name: Commit if changed
         shell: powershell
         run: |
           git add docs/all_metadata_combined.json
           $status = git status --porcelain
           if ($status) {
             git commit -m "Update docs/all_metadata_combined.json on gh-pages"
-            git push origin gh-pages
-            Write-Host "Changes committed and pushed."
           } else {
             Write-Host "No changes to commit."
+          }
+
+      - name: Push to gh-pages (explicit auth)
+        if: ${{ success() }}
+        shell: powershell
+        env:
+          GIT_AUTH_TOKEN: ${{ github.token }}   
+        run: |
+          # Set remote to include token so Git never prompts
+          $origin = "https://x-access-token:$env:GIT_AUTH_TOKEN@github.com/${{ github.repository }}.git"
+          git remote set-url origin $origin
+
+          $ahead = git rev-list --count origin/gh-pages..HEAD 2>$null
+          if ($ahead -gt 0) {
+            git push origin gh-pages
+            Write-Host "Changes pushed."
+          } else {
+            Write-Host "Nothing to push."
           }
