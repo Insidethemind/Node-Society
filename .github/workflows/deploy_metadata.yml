@@ -11,37 +11,24 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout default branch (read only)
+      - name: Checkout gh-pages (or create if missing)
         uses: actions/checkout@v4
         with:
-          token: ${{ github.token }}
+          ref: gh-pages
           fetch-depth: 0
+          token: ${{ github.token }}
           persist-credentials: false
 
-      - name: Ensure gh-pages exists locally
+      - name: Configure git identity (repo-local only)
         shell: powershell
         run: |
-          if (git ls-remote --heads origin gh-pages) {
-            git fetch origin gh-pages
-            git checkout gh-pages
-          } else {
-            git checkout --orphan gh-pages
-            if (-not (git status --porcelain)) {
-              if (-not (Test-Path "docs")) { New-Item -ItemType Directory -Path "docs" | Out-Null }
-              Set-Content -Path docs\.keep -Value ""
-              git add docs\.keep
-              git commit -m "Initialize gh-pages"
-            }
+          if (-not (Test-Path ".git")) {
+            Write-Error "Not a git repository. Did checkout fail?"
           }
-
-      - name: Configure repo-local git identity (no global/system changes)
-        shell: powershell
-        run: |
           git config user.name  "github-actions"
           git config user.email "github-actions@github.com"
-          git config --local credential.helper ""
 
-      - name: Update docs/all_metadata_combined.json from main
+      - name: Get latest metadata file from main
         shell: powershell
         run: |
           git fetch origin main
@@ -55,21 +42,19 @@ jobs:
           git add docs/all_metadata_combined.json
           $status = git status --porcelain
           if ($status) {
-            git commit -m "Update docs/all_metadata_combined.json on gh-pages"
+            git commit -m "Update metadata JSON on gh-pages"
             "changed=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
           } else {
             "changed=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
-            Write-Host "No changes to commit."
           }
 
-      - name: Push to gh-pages (explicit token; non-interactive)
+      - name: Push to gh-pages
         if: steps.commit.outputs.changed == 'true'
         shell: powershell
         env:
-          GIT_AUTH_TOKEN: ${{ github.token }}  
+          GIT_AUTH_TOKEN: ${{ github.token }}
           GIT_TERMINAL_PROMPT: "0"
         run: |
           $origin = "https://x-access-token:$env:GIT_AUTH_TOKEN@github.com/${{ github.repository }}.git"
           git remote set-url origin $origin
           git push origin HEAD:gh-pages
-          Write-Host "Pushed to gh-pages."
