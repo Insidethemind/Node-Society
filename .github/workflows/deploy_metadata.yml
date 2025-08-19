@@ -27,25 +27,27 @@ jobs:
           }
           git config user.name  "github-actions"
           git config user.email "github-actions@github.com"
+          git config --local credential.helper ""
 
-      - name: Get latest metadata file from main
+      - name: Get metadata JSON from main
         shell: powershell
         run: |
           git fetch origin main
-          if (-not (Test-Path "docs")) { New-Item -ItemType Directory -Path "docs" | Out-Null }
-          git show origin/main:docs/all_metadata_combined.json > docs/all_metadata_combined.json
+          # Write file into the root of gh-pages instead of docs/
+          git show origin/main:docs/all_metadata_combined.json > all_metadata_combined.json
 
       - name: Commit if changed
         id: commit
         shell: powershell
         run: |
-          git add docs/all_metadata_combined.json
+          git add all_metadata_combined.json
           $status = git status --porcelain
           if ($status) {
-            git commit -m "Update metadata JSON on gh-pages"
+            git commit -m "Update all_metadata_combined.json on gh-pages"
             "changed=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
           } else {
             "changed=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+            Write-Host "No changes to commit."
           }
 
       - name: Push to gh-pages
@@ -58,3 +60,4 @@ jobs:
           $origin = "https://x-access-token:$env:GIT_AUTH_TOKEN@github.com/${{ github.repository }}.git"
           git remote set-url origin $origin
           git push origin HEAD:gh-pages
+          Write-Host "Pushed to gh-pages."
