@@ -11,54 +11,82 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout gh-pages
+      - name: Checkout default branch
         uses: actions/checkout@v4
         with:
-          ref: gh-pages
+          token: ${{ github.token }}
           fetch-depth: 0
           persist-credentials: false  
-          token: ${{ github.token }}    
 
-      - name: Configure git user (repo-local)
+      - name: Configure repo-local git settings
         shell: powershell
         run: |
+          $ErrorActionPreference = "Stop"
           git config user.name  "github-actions"
           git config user.email "github-actions@github.com"
-          # Disable any helper only for this repo (no admin perms needed)
           git config --local credential.helper ""
+
+      - name: Ensure gh-pages worktree (create if missing)
+        shell: powershell
+        run: |
+          $ErrorActionPreference = "Stop"
+
+          $exists = git ls-remote --heads origin gh-pages
+          if ($exists) {
+            git fetch origin gh-pages
+            git checkout gh-pages
+          } else {
+            git checkout --orphan gh-pages
+            if (-not (git status --porcelain)) {
+              New-Item -ItemType Directory -Path docs -Force | Out-Null
+              Set-Content -Path docs\.keep -Value ""
+              git add docs\.keep
+              git commit -m "Initialize gh-pages"
+            }
+          }
 
       - name: Update docs/all_metadata_combined.json from main
         shell: powershell
         run: |
+          $ErrorActionPreference = "Stop"
+
           git fetch origin main
-          if (-not (Test-Path "docs")) { New-Item -ItemType Directory -Path "docs" | Out-Null }
+
+          if (-not (Test-Path "docs")) {
+            New-Item -ItemType Directory -Path "docs" | Out-Null
+          }
+
           git show origin/main:docs/all_metadata_combined.json > docs/all_metadata_combined.json
 
       - name: Commit if changed
+        id: commit
         shell: powershell
         run: |
+          $ErrorActionPreference = "Stop"
+
           git add docs/all_metadata_combined.json
           $status = git status --porcelain
+
           if ($status) {
             git commit -m "Update docs/all_metadata_combined.json on gh-pages"
+            "changed=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+            Write-Host "Committed changes."
           } else {
+            "changed=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
             Write-Host "No changes to commit."
           }
 
-      - name: Push to gh-pages (explicit auth, non-interactive)
-        if: ${{ success() }}
+      - name: Push to gh-pages (explicit non-interactive auth)
+        if: steps.commit.outputs.changed == 'true'
         shell: powershell
         env:
           GIT_AUTH_TOKEN: ${{ github.token }}  
           GIT_TERMINAL_PROMPT: "0"
         run: |
+          $ErrorActionPreference = "Stop"
+
           $origin = "https://x-access-token:$env:GIT_AUTH_TOKEN@github.com/${{ github.repository }}.git"
           git remote set-url origin $origin
 
-          $ahead = git rev-list --count origin/gh-pages..HEAD 2>$null
-          if ($ahead -gt 0) {
-            git push origin gh-pages
-            Write-Host "Changes pushed."
-          } else {
-            Write-Host "Nothing to push."
-          }
+          git push origin HEAD:gh-pages
+          Write-Host "Pushed to gh-pages."
