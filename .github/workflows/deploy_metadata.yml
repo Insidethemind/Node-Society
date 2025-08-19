@@ -11,50 +11,86 @@ jobs:
     runs-on: self-hosted
 
     steps:
-      - name: Checkout gh-pages (or create if missing)
+      - name: Checkout gh-pages (if it exists)
         uses: actions/checkout@v4
+        continue-on-error: true
         with:
           ref: gh-pages
           fetch-depth: 0
           token: ${{ github.token }}
           persist-credentials: false
 
-      - name: Configure git identity (repo-local only)
+      - name: Ensure repo and gh-pages branch
         shell: powershell
+        env:
+          AUTH: ${{ github.token }}
         run: |
           if (-not (Test-Path ".git")) {
-            Write-Error "Not a git repository. Did checkout fail?"
+            git init
+            $remote = "https://x-access-token:$env:AUTH@github.com/${{ github.repository }}.git"
+            git remote add origin $remote
+          } else {
+            $remote = "https://x-access-token:$env:AUTH@github.com/${{ github.repository }}.git"
+            git remote set-url origin $remote
           }
+
+          $hasGhPages = git ls-remote --heads origin gh-pages
+          if ($hasGhPages) {
+            git fetch origin gh-pages
+            # If no branch locally, create tracking branch
+            if (-not (git rev-parse --verify gh-pages 2>$null)) {
+              git checkout -b gh-pages origin/gh-pages
+            } else {
+              git checkout gh-pages
+              # Sync with remote
+              git reset --hard origin/gh-pages
+            }
+          } else {
+            git checkout --orphan gh-pages
+            if (-not (git status --porcelain)) {
+              # Ensure there is at least one file to commit on first push
+              Set-Content -Path .keep -Value ""
+              git add .keep
+              git commit -m "Initialize gh-pages"
+              Remove-Item .keep
+            }
+          }
+
+      - name: Configure git identity (repo-local)
+        shell: powershell
+        run: |
           git config user.name  "github-actions"
           git config user.email "github-actions@github.com"
+          git config --local credential.helper ""
 
-      - name: Get latest metadata file from main
+      - name: Update all_metadata_combined.json from main (to root)
         shell: powershell
         run: |
           git fetch origin main
-          if (-not (Test-Path "docs")) { New-Item -ItemType Directory -Path "docs" | Out-Null }
           git show origin/main:docs/all_metadata_combined.json > all_metadata_combined.json
 
       - name: Commit if changed
         id: commit
         shell: powershell
         run: |
-          git add docs/all_metadata_combined.json
+          git add all_metadata_combined.json
           $status = git status --porcelain
           if ($status) {
-            git commit -m "Update metadata JSON on gh-pages"
+            git commit -m "Update all_metadata_combined.json on gh-pages"
             "changed=true" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
           } else {
             "changed=false" | Out-File -FilePath $env:GITHUB_OUTPUT -Append
+            Write-Host "No changes to commit."
           }
 
-      - name: Push to gh-pages
+      - name: Push to gh-pages (non-interactive)
         if: steps.commit.outputs.changed == 'true'
         shell: powershell
         env:
-          GIT_AUTH_TOKEN: ${{ github.token }}
+          AUTH: ${{ github.token }}   
           GIT_TERMINAL_PROMPT: "0"
         run: |
-          $origin = "https://x-access-token:$env:GIT_AUTH_TOKEN@github.com/${{ github.repository }}.git"
-          git remote set-url origin $origin
+          $remote = "https://x-access-token:$env:AUTH@github.com/${{ github.repository }}.git"
+          git remote set-url origin $remote
           git push origin HEAD:gh-pages
+          Write-Host "Pushed to gh-pages."
